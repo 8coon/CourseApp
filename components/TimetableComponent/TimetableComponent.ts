@@ -12,6 +12,14 @@ export class TimetableComponent {
     public _classes = [];
 
 
+    @(<any> JSWorks.ComponentProperty())
+    public loading: boolean = true;
+
+
+    @(<any> JSWorks.ComponentProperty())
+    public error: boolean = false;
+
+
     @(<any> JSWorks.ComponentCollectionProperty())
     public timetable: ITimetableDay[] = [
         {
