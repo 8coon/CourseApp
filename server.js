@@ -4,13 +4,14 @@ const fs = require('fs');
 const express = require('express');
 
 const path = `${__dirname}/node_modules/jsworks/dist/`;
-const testsPath = `${__dirname}/spec`;
+const fontAwesomePath = `${__dirname}/node_modules/font-awesome/`;
 const app = express();
 
 
 app.use('/', express.static(`${__dirname}/dist/out`));
 app.use('/static', express.static(`${__dirname}/static`));
 app.use('/jsworks', express.static(path));
+app.use('/font-awesome', express.static(fontAwesomePath));
 
 
 app.get('/', (req,res) => {

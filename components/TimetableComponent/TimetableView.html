@@ -1,0 +1,51 @@
+<app-view id="TimetableView">
+
+    <i class="fa fa-angle-left"></i>
+
+    <div class="timetable">
+
+        <view-for variable="day" in="$.timetable">
+            <div class="timetable-day">
+                <div class="timetable-day-title">
+
+                    <view-eval value="$._classes = day.classes, day.title"></view-eval>
+
+                </div>
+
+                <div class="timetable-classes">
+
+                    <view-for variable="_class" in="$._classes">
+
+                        <div class="timetable-class">
+
+                            <div class="timetable-class-time">
+                                <view-eval value="$.formatTime(_class.beginTime, _class.endTime)"></view-eval>
+                            </div>
+
+                            <div class="timetable-class-location">
+                                <view-eval value="_class.location"></view-eval>
+                            </div>
+
+                            <div class="timetable-class-body">
+                                <div class="timetable-class-title">
+                                    <view-eval value="_class.title"></view-eval>
+                                </div>
+
+                                <div class="timetable-class-professor">
+                                    <view-eval value="_class.professor"></view-eval>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </view-for>
+
+                </div>
+            </div>
+
+        </view-for>
+
+    </div>
+
+
+</app-view>

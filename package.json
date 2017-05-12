@@ -31,6 +31,7 @@
         "eslint": "3.17.1",
         "express": "4.15.2",
         "reflect-metadata": "0.1.10",
+        "font-awesome": "4.7.0",
         "jsworks": "https://github.com/8coon/next"
     }
 }
