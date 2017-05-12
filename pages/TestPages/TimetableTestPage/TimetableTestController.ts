@@ -5,6 +5,6 @@ declare const JSWorks: JSWorksLib;
 
 
 @JSWorks.Controller
-export class MenuController {
+export class TimetableTestController {
 
 }

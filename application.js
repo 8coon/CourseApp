@@ -1,6 +1,11 @@
+'use strict';
+
 // Require your application JS files here
 
-require('./pages/MenuPage/MenuView.html');
-require('./pages/MenuPage/MenuView.css');
-require('./dist/compiled/pages/MenuPage/MenuPage.js');
-require('./dist/compiled/pages/MenuPage/MenuController.js');
+
+function requireAll(r) { r.keys().forEach(r); }
+
+requireAll(require.context('./pages/', true, /\.(js|css|html)$/));
+requireAll(require.context('./views/', true, /\.(js|css|html)$/));
+requireAll(require.context('./dist/compiled/', true, /\.(js|css|html)$/));
+
