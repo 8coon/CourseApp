@@ -1,5 +1,6 @@
 import {JSWorksLib} from "jsworks/dist/dts/jsworks";
 import {ITimetableDay} from "./ITimetable";
+import {TimetableController} from "./TimetableController";
 
 
 declare const JSWorks: JSWorksLib;
@@ -10,14 +11,16 @@ export class TimetableComponent {
 
 
     public _classes = [];
+    public onRepeatClick: (component?: TimetableComponent) => void;
+    public controller: TimetableController;
 
 
     @(<any> JSWorks.ComponentProperty())
-    public loading: boolean = true;
+    public loading: boolean = false;
 
 
     @(<any> JSWorks.ComponentProperty())
-    public error: boolean = false;
+    public error: boolean = true;
 
 
     @(<any> JSWorks.ComponentCollectionProperty())

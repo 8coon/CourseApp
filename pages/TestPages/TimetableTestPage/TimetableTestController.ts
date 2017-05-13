@@ -14,11 +14,26 @@ export class TimetableTestController {
 
 
     public onCreate(): void {
-        window.setInterval(() => {
-            const timetable: TimetableComponent =
-                (<ComponentElement> this.view.DOMRoot.querySelector('#timetable')).component;
+        const trigger1 = () => {
+            const element: ComponentElement = <ComponentElement> this.view.DOMRoot.querySelector(`#timetable1`);
+            const timetable: TimetableComponent = element.component;
+
             timetable.loading = !timetable.loading;
-        }, 2000);
+
+            window.setTimeout(trigger1, 1000 +  Math.random() * 4000);
+        };
+
+        const trigger2 = () => {
+            const element: ComponentElement = <ComponentElement> this.view.DOMRoot.querySelector(`#timetable2`);
+            const timetable: TimetableComponent = element.component;
+
+            timetable.loading = !timetable.loading;
+
+            window.setTimeout(trigger2, 1000 +  Math.random() * 4000);
+        };
+
+        window.setTimeout(trigger1, 1000);
+        window.setTimeout(trigger2, 1000);
     }
 
 }

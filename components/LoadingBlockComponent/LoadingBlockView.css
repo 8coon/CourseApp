@@ -1,5 +1,12 @@
 
 
+.c-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
 .c-loading .loading {
     width: 64px;
     height: 64px;
