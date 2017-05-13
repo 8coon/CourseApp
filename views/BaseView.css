@@ -4,3 +4,33 @@ body {
     font-family: 'San Francisco UI', 'Helvetica Neue', 'Lucida Sans', sans-serif;
     font-size: 0.8em;
 }
+
+
+.no-select {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: default;
+}
+
+
+button {
+    background-color: rgb(49, 112, 205);
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+input {
+    border: none;
+}
+
+button:hover {
+    background-color: rgba(49, 112, 205, 0.9);
+}
+
+button:active {
+    background-color: rgb(29, 92, 195);
+}
+

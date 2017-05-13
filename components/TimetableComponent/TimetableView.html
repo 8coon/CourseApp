@@ -1,6 +1,6 @@
 <app-view id="TimetableView">
 
-    <div class="timetable-wrapper">
+    <div class="timetable-wrapper no-select">
 
         <view-if condition="$.loading || $.error">
             <view-then>
@@ -33,7 +33,7 @@
                 <div class="timetable-day">
                     <div class="timetable-day-title">
 
-                        <view-eval value=" $._classes = day.classes, day.title"></view-eval>
+                        <view-eval value="$._classes = day.classes, day.title"></view-eval>
 
                     </div>
 

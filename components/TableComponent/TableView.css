@@ -1,0 +1,148 @@
+
+
+.table-toolbox {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+}
+
+
+.table-toolbox > h1 {
+    flex-grow: 1;
+}
+
+
+.table-toolbox-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.table-toolbox-button:hover {
+    background-color: rgba(49, 112, 205, 0.1);
+}
+
+.table-toolbox-button:active {
+    background-color: rgba(49, 112, 205, 0.2);
+}
+
+.table-toolbox-button > i {
+    flex-basis: 100%;
+    font-size: 200%;
+    font-weight: 100;
+}
+
+.table-toolbox-button > span {
+    flex-basis: 100%;
+    font-weight: 100;
+    padding-top: 3px;
+    font-size: 80%;
+}
+
+.table-refresh-button > i {
+    color: rgb(49, 112, 205);
+}
+
+.table-add-button > i {
+    color: rgb(125, 202, 109);
+}
+
+.table-remove-button > i {
+    color: rgb(209, 67, 67);
+}
+
+.table-drop-filters-button > i {
+    color: rgba(51, 51, 51, 0.8);
+}
+
+
+
+.table-header {
+    display: flex;
+    flex-direction: row;
+}
+
+
+.table-column-action {
+    padding: 3px;
+    cursor: pointer;
+    opacity: 1;
+}
+
+.table-column-action:hover {
+    opacity: 1;
+}
+
+
+.table-column-action-disabled {
+    opacity: 0.3;
+}
+
+
+.table-column-action-disabled:hover {
+    opacity: 0.5;
+}
+
+
+
+
+.table > view-for {
+    display: flex;
+    flex-direction: row;
+}
+
+.table > view-for > view-item {
+    flex: 1;
+}
+
+
+.table-header {
+    color: rgba(51, 51, 51, 0.8);
+    border-bottom: 1px solid rgba(51, 51, 51, 0.2);
+}
+
+
+.table-cells > view-for {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.table-cell {
+    padding: 5px;
+    border-bottom: 1px solid rgba(51, 51, 51, 0.1);
+    border-left: 1px solid rgba(51, 51, 51, 0.1);
+}
+
+.table > view-for > view-item:first-child .table-cell {
+    border-left: none;
+}
+
+
+.table-cell-title {
+    background-color: azure;
+}
+
+
+.table-cell input {
+    width: 100%;
+    border: none;
+}
+
+.table-filter {
+    position: fixed;
+    display: none;
+
+    padding: 5px;
+    background-color: white;
+    border-radius: 5px;
+    border: 3px solid rgba(49, 112, 205, 0.3);
+}
+
+.table-filter input {
+    padding: 2px;
+}
