@@ -20,7 +20,7 @@ export class TimetableComponent {
 
 
     @(<any> JSWorks.ComponentProperty())
-    public error: boolean = true;
+    public error: boolean = false;
 
 
     @(<any> JSWorks.ComponentCollectionProperty())

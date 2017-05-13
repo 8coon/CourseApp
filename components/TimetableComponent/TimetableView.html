@@ -23,9 +23,11 @@
             <view-else></view-else>
         </view-if>
 
-        <i class="fa fa-angle-left"></i>
-
         <div class="timetable">
+
+            <div class="timetable-arrow timetable-arrow-left">
+                <i class="fa fa-angle-left"></i>
+            </div>
 
             <view-for variable="day" in="$.timetable">
                 <div class="timetable-day">
@@ -67,6 +69,10 @@
                 </div>
 
             </view-for>
+
+            <div class="timetable-arrow timetable-arrow-right">
+                <i class="fa fa-angle-right"></i>
+            </div>
 
         </div>
     </div>

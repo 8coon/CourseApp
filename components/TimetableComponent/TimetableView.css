@@ -1,5 +1,13 @@
 
 
+.timetable {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+
 .timetable-wrapper {
     position: relative;
     padding: 15px;
@@ -13,11 +21,14 @@
     align-items: flex-start;
 
     font-weight: 100;
+    height: 100%;
+    position: relative;
 }
 
 
 .timetable > view-for > view-item {
     width: 170px;
+    flex: 1;
 }
 
 
@@ -153,6 +164,27 @@
     color: rgba(209, 67, 67, 0.7);
     text-decoration: none;
     border-bottom: 1px solid;
+}
+
+
+.timetable-arrow {
+    margin: 10px;
+}
+
+.timetable-arrow:hover {
+    background-color: rgba(49, 112, 205, 0.1);
+}
+
+.timetable-arrow:active {
+    background-color: rgba(49, 112, 205, 0.2);
+}
+
+
+.timetable-arrow i {
+    color: rgb(49, 112, 205);
+    cursor: pointer;
+    font-size: 250%;
+    padding: 10px;
 }
 
 

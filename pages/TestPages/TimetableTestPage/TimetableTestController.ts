@@ -32,8 +32,8 @@ export class TimetableTestController {
             window.setTimeout(trigger2, 1000 +  Math.random() * 4000);
         };
 
-        window.setTimeout(trigger1, 1000);
-        window.setTimeout(trigger2, 1000);
+        // window.setTimeout(trigger1, 1000);
+        // window.setTimeout(trigger2, 1000);
     }
 
 }

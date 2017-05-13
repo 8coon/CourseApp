@@ -13,10 +13,22 @@ export class TimetableController {
     public view: View;
     public component: TimetableComponent;
 
-    private patched: boolean = false;
+    public onLeftClick: (timetable: TimetableComponent) => void;
+    public onRightClick: (timetable: TimetableComponent) => void;
 
 
-    public onCreate(): void {
+    public onDOMInsert(): void {
+        this.view.DOMRoot.querySelector('.timetable-arrow-left').addEventListener('click', () => {
+            if (this.onLeftClick) {
+                this.onLeftClick(this.component);
+            }
+        });
+
+        this.view.DOMRoot.querySelector('.timetable-arrow-right').addEventListener('click', () => {
+            if (this.onRightClick) {
+                this.onRightClick(this.component);
+            }
+        });
     }
 
 
