@@ -1,8 +1,9 @@
 import {Route} from "jsworks/dist/dts/Router/Route";
+import {TableComponent} from "./TableComponent";
 
 
 export interface ITableForeignKey {
-    route: Route;
+    route: Route | string;
     valueKey?: string;
 }
 
@@ -21,4 +22,9 @@ export interface ITableColumn {
     canFilter?: boolean;
     canEdit?: boolean;
     isTitle?: boolean;
+
+    type?: string;
+    selectList?: string[];
+    buttonText?: string;
+    onButtonClick?: (table: TableComponent, data: object) => void;
 }

@@ -4,7 +4,8 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: stretch;
+    align-items: baseline;
+    padding-bottom: 10px;
 }
 
 
@@ -117,6 +118,8 @@
     padding: 5px;
     border-bottom: 1px solid rgba(51, 51, 51, 0.1);
     border-left: 1px solid rgba(51, 51, 51, 0.1);
+    overflow: hidden;
+    height: 1.2em;
 }
 
 .table > view-for > view-item:first-child .table-cell {
@@ -173,4 +176,73 @@
 
 .table-inactive-button:hover {
     background-color: white;
+}
+
+
+.table-cell a {
+    color: rgb(51, 51, 51);
+    text-decoration: none;
+}
+
+.table-cell view-eval {
+    display: block;
+    border-bottom: 1px solid rgba(51, 51, 51, 0.0);
+}
+
+.table-cell a > view-eval {
+    display: inline-block;
+    border-bottom: 1px dashed rgba(51, 51, 51, 0.7);
+}
+
+.table-cell a > view-eval:hover {
+    border-bottom: 1px solid;
+}
+
+
+.table-cell button {
+    padding-bottom: 1px;
+    padding-top: 0;
+    margin: 0;
+}
+
+.table-cell input {
+    margin: 0;
+    border: none;
+    outline: none;
+}
+
+.table-cell select {
+    /*-webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;*/
+    margin: 0;
+    border: none;
+    outline: none;
+}
+
+
+.table-pager {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-top: 20px;
+}
+
+.table-pager-button {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.table-pager-button:hover {
+    background-color: rgba(49, 112, 205, 0.1);
+}
+
+.table-pager-button:active {
+    background-color: rgba(49, 112, 205, 0.2);
+}
+
+.table-pager-text {
+    padding: 10px 20px;
+    font-weight: 100;
+    font-size: 110%;
 }

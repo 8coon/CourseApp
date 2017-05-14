@@ -78,6 +78,8 @@
                     </view-if>
 
                     <view-eval value="column.title"></view-eval>
+
+                    <i class="fa fa-filter table-column-filter table-column-action" style="visibility: hidden"></i>
                 </div>
 
                 <div class="table-cells">
@@ -85,22 +87,29 @@
                         <div class="table-cell${column.isTitle ? ' table-cell-title' : ''}"
                                 row="${$._j}" column="${$._i - 1}">
 
-                            <view-if condition="column.foreignKey !== undefined" static>
-                                <view-then>
-                                    <view-for variable="_" in="[column.foreignKey]" static>
+                            <view-switch static>
 
-                                        <a href="#${row[(_ || 0).valueKey || column.name]}">
+                                <view-case condition="column.foreignKey !== undefined">
+                                    <view-for variable="_" in="[column.foreignKey]" static>
+                                        <a href="#">
                                             <view-eval value="row[column.name]"></view-eval>
                                         </a>
-
                                     </view-for>
-                                </view-then>
-                                <view-else>
-                                    <view-eval value="row[column.name]"></view-eval>
-                                </view-else>
-                            </view-if>
+                                </view-case>
 
-                            <view-eval value="$._j++"></view-eval>
+                                <view-case condition="column.type === 'button'">
+                                    <button type="button">
+                                        <view-eval value="column.buttonText || '&nbsp;'"></view-eval>
+                                    </button>
+                                </view-case>
+
+                                <view-case condition="column.type !== 'button'">
+                                    <view-eval value="row[column.name] || '&nbsp;'"></view-eval>
+                                </view-case>
+
+                            </view-switch>
+
+                            <view-eval value="$._j++" style="display: none;"></view-eval>
 
                         </div>
                     </view-for>
@@ -113,6 +122,30 @@
             <view-eval value="$.controller.onUpdate(), _" style="display: none;"></view-eval>
         </view-for>
     </div>
+
+
+    <div class="table-pager">
+
+        <div class="table-pager-button table-pager-start">
+            <i class="fa fa-angle-double-left"></i>
+        </div>
+
+        <div class="table-pager-button table-pager-back">
+            <i class="fa fa-angle-left"></i>
+        </div>
+
+        <div class="table-pager-text no-select">Replace Me</div>
+
+        <div class="table-pager-button table-pager-forward">
+            <i class="fa fa-angle-right"></i>
+        </div>
+
+        <div class="table-pager-button table-pager-end">
+            <i class="fa fa-angle-double-right"></i>
+        </div>
+
+    </div>
+
 
     <div class="table-filter">
         <input placeholder="Введите фильтр">
