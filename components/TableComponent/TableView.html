@@ -32,6 +32,27 @@
 
 
     <div class="table">
+        <view-if condition="$.loading || $.error">
+            <view-then>
+                <div class="curtain">
+
+                    <view-if condition="$.loading">
+                        <view-then>
+                            <view-component name="LoadingBlockComponent"></view-component>
+                        </view-then>
+
+                        <view-else>
+                            <div class="component-error">
+                                При загрузке данных произошла ошибка.
+                            </div>
+                        </view-else>
+                    </view-if>
+                </div>
+            </view-then>
+
+            <view-else></view-else>
+        </view-if>
+
         <view-for variable="column" in="$._i = 0, $.columns">
 
             <div class="table-column" column="${$._i}">

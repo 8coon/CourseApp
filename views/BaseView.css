@@ -39,3 +39,18 @@ button:active {
     background-color: rgb(29, 92, 195);
 }
 
+
+.curtain {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 9000;
+    background-color: rgba(230, 230, 230, 0.8);
+}
+

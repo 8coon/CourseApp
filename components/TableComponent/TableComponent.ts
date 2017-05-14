@@ -21,6 +21,13 @@ export class TableComponent {
 
 
     @(<any> JSWorks.ComponentProperty())
+    public loading: boolean = false;
+
+    @(<any> JSWorks.ComponentProperty())
+    public error: boolean = false;
+
+
+    @(<any> JSWorks.ComponentProperty())
     public selectedRow: number;
 
 

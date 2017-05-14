@@ -126,21 +126,6 @@
 }
 
 
-.timetable-curtain {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    height: 100%;
-    width: 100%;
-    top: 0;
-    left: 0;
-    z-index: 9000;
-    background-color: rgba(230, 230, 230, 0.8);
-}
-
-
 .component-error {
     opacity: 0.9;
     border-radius: 7px;
