@@ -13,6 +13,17 @@ export class TableComponent {
     public title: string = 'Table';
 
 
+    @(<any> JSWorks.ComponentProperty())
+    public selectable: boolean = true;
+
+
+    @(<any> JSWorks.ComponentProperty())
+    public selectedRow: number;
+
+
+    public isEditing: boolean = false;
+
+
     @(<any> JSWorks.ComponentCollectionProperty())
     public columns: ITableColumn[] = [
         {
@@ -36,6 +47,10 @@ export class TableComponent {
             title: 'КЛЮЧ',
             width: 0.1,
             canOrder: true,
+            foreignKey: {
+                route: undefined,
+                valueKey: 'key',
+            }
         },
     ];
 

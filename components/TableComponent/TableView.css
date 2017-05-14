@@ -103,6 +103,7 @@
 .table-header {
     color: rgba(51, 51, 51, 0.8);
     border-bottom: 1px solid rgba(51, 51, 51, 0.2);
+    font-weight: 100;
 }
 
 
@@ -124,7 +125,7 @@
 
 
 .table-cell-title {
-    background-color: azure;
+    color: rgba(51, 51, 51, 0.8);
 }
 
 
@@ -145,4 +146,31 @@
 
 .table-filter input {
     padding: 2px;
+}
+
+.table-filter button {
+    background-color: rgb(49, 112, 205);
+    padding: 5px;
+    margin: 0;
+}
+
+
+.table-cell-hover {
+    background-color: rgba(49, 112, 205, 0.1);
+}
+
+.table-cell-selected {
+    background-color: rgba(49, 112, 205, 0.8);
+    color: white;
+}
+
+
+.table-inactive-button {
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+    opacity: 0.5;
+}
+
+.table-inactive-button:hover {
+    background-color: white;
 }

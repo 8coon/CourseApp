@@ -22,10 +22,12 @@
             <span>Добавить</span>
         </div>
 
-        <div class="table-toolbox-button table-remove-button">
-            <i class="fa fa-trash"></i>
-            <span>Удалить</span>
-        </div>
+        <view-for variable="_" in="[$.selectedRow === undefined]">
+            <div class="table-toolbox-button table-remove-button${_ ? ' table-inactive-button' : ''}">
+                <i class="fa fa-trash"></i>
+                <span>Удалить</span>
+            </div>
+        </view-for>
     </div>
 
 
@@ -80,9 +82,26 @@
 
                 <div class="table-cells">
                     <view-for variable="row" in="$._j = 0, $.data" static>
-                        <div class="table-cell ${column.isTitle ? 'table-cell-title' : ''}"
+                        <div class="table-cell${column.isTitle ? ' table-cell-title' : ''}"
                                 row="${$._j}" column="${$._i - 1}">
-                            <view-eval value="$._j++, row[column.name]"></view-eval>
+
+                            <view-if condition="column.foreignKey !== undefined" static>
+                                <view-then>
+                                    <view-for variable="_" in="[column.foreignKey]" static>
+
+                                        <a href="#${row[(_ || 0).valueKey || column.name]}">
+                                            <view-eval value="row[column.name]"></view-eval>
+                                        </a>
+
+                                    </view-for>
+                                </view-then>
+                                <view-else>
+                                    <view-eval value="row[column.name]"></view-eval>
+                                </view-else>
+                            </view-if>
+
+                            <view-eval value="$._j++"></view-eval>
+
                         </div>
                     </view-for>
                 </div>

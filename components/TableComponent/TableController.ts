@@ -1,8 +1,10 @@
 import {JSWorksLib} from "jsworks/dist/dts/jsworks";
 import {View} from "jsworks/dist/dts/View/View";
 import {SimpleVirtualDOMElement} from "jsworks/dist/dts/VirtualDOM/SimpleVirtualDOM/SimpleVirtualDOMElement";
+import {ComponentElement} from "jsworks/dist/dts/CustomElements/ViewElements/ComponentElement";
 import {TableComponent} from "./TableComponent";
 import {ITableColumn} from "./ITable";
+import {WindowComponent} from "../WindowComponent/WindowComponent";
 
 
 declare const JSWorks: JSWorksLib;
@@ -15,10 +17,13 @@ export class TableController {
     public component: TableComponent;
 
     public onCellChange: (table: TableComponent, data: object) => void;
+    public onAdd: (table: TableComponent) => void;
+    public onRemove: (table: TableComponent, data: object) => void;
     public onQuery: (table: TableComponent) => void;
 
 
     public triggerRefresh(): any[] {
+        this.component.selectedRow = undefined;
         const values = (<any> this.component.columns).getValues();
         (<any> this.component.columns).clear();
 
@@ -28,7 +33,6 @@ export class TableController {
 
     public onDOMInsert(): void {
         this.view.DOMRoot.querySelector('.table-drop-filters-button').addEventListener('click', (event) => {
-            event.stopPropagation();
             this.clearFilterButtonState();
 
             const values = this.triggerRefresh();
@@ -45,6 +49,39 @@ export class TableController {
                 return returning;
             }));
         });
+
+        window.setTimeout(() => {
+            this.view.DOMRoot.querySelector('.table-remove-button').addEventListener('click', (event) => {
+                if (this.view.DOMRoot.querySelector('.table-remove-button').hasClass('table-inactive-button')) {
+                    return;
+                }
+
+                const windows: WindowComponent = JSWorks.applicationContext.currentPage['view']
+                    .DOMRoot.querySelector('#modal-root').component;
+                const windowView: View = JSWorks.applicationContext.viewHolder.getView('DeleteDialogView');
+                const yesButton = windowView.DOMRoot.querySelector('.dialog-yes');
+                const noButton = windowView.DOMRoot.querySelector('.dialog-no');
+
+                yesButton.removeEventListeners('click');
+                yesButton.addEventListener('click', () => {
+                    const data: object = (<any> this.component.data).get(this.component.selectedRow);
+                    alert(`${JSON.stringify(data)} removed!`);
+
+                    if (this.onRemove) {
+                        this.onRemove(this.component, data);
+                    }
+
+                    windows.closeLastWindow();
+                });
+
+                noButton.removeEventListeners('click');
+                noButton.addEventListener('click', () => {
+                    windows.closeLastWindow();
+                });
+
+                windows.openWindow(windowView);
+            });
+        }, 100);
     }
 
 
@@ -167,15 +204,62 @@ export class TableController {
     }
 
 
-    public onUpdate(): void {
-        this.view.DOMRoot.querySelectorAll('.table-column').forEach((column: SimpleVirtualDOMElement) => {
-            const colData: ITableColumn = (<any> this.component.columns).get(parseInt(column.getAttribute('column')));
+    private patchCells(): void {
+        this.view.DOMRoot.querySelectorAll('.table-cell').forEach((cell: SimpleVirtualDOMElement) => {
+            cell.removeEventListeners('click');
+            cell.addEventListener('click', () => {
+                if (!this.component.selectable || this.component.isEditing) {
+                    return;
+                }
 
-            this.patchSorter(column, colData);
-            this.patchFilter(column, colData);
+                this.view.DOMRoot.querySelectorAll('.table-cell').forEach((anyCell) => {
+                    anyCell.toggleClass('table-cell-selected', false);
+                });
+
+                const row: number = parseInt(cell.getAttribute('row'), 10);
+                this.component.selectedRow = row;
+
+                this.view.DOMRoot.querySelectorAll(
+                    `.table-cell[row="${row}"]`).forEach((rowCell) => {
+                    if (rowCell.hasClass('table-cell-title')) {
+                        return;
+                    }
+
+                    rowCell.toggleClass('table-cell-selected', true);
+                });
+
+                cell.rendered.dispatchEvent(new Event('mouseover'));
+            });
+
+            cell.removeEventListeners('mouseover');
+            cell.addEventListener('mouseover', () => {
+                if (this.component.isEditing) {
+                    return;
+                }
+
+                this.view.DOMRoot.querySelectorAll('.table-cell').forEach((anyCell) => {
+                    anyCell.toggleClass('table-cell-hover', false);
+                });
+
+                const highlightCell = (cell: SimpleVirtualDOMElement) => {
+                    if (cell.hasClass('table-cell-title') || cell.hasClass('table-cell-selected')) {
+                        return;
+                    }
+
+                    cell.toggleClass('table-cell', true);
+                    cell.toggleClass('table-cell-hover', true);
+                };
+
+                this.view.DOMRoot.querySelectorAll(
+                    `.table-cell[row="${cell.getAttribute('row')}"]`).forEach(highlightCell);
+                this.view.DOMRoot.querySelectorAll(
+                    `.table-cell[column="${cell.getAttribute('column')}"]`).forEach(highlightCell);
+            });
         });
+    }
 
 
+    private patchCellEvents(): void {
         this.view.DOMRoot.querySelectorAll('.table-cell').forEach((cell: SimpleVirtualDOMElement) => {
             if (cell['_tablePatched']) {
                 return;
@@ -186,9 +270,15 @@ export class TableController {
 
             if (column.canEdit) {
                 cell.addEventListener('dblclick', () => {
+                    this.component.isEditing = true;
+
                     const text: string = (<any> this.component.data).get(
                             parseInt(cell.getAttribute('row'), 10))[column.name];
                     const viewEval: SimpleVirtualDOMElement = cell.querySelector('view-eval');
+
+                    if (!viewEval) {
+                        return;
+                    }
 
                     viewEval.removeChildren();
 
@@ -197,6 +287,8 @@ export class TableController {
                     input.setAttribute('value', text);
 
                     input.addEventListener('blur', () => {
+                        this.component.isEditing = false;
+
                         const data = (<any> this.component.data).get(parseInt(cell.getAttribute('row'), 10));
                         data[column.name] = (<any> input.rendered).value;
                         this.refresh();
@@ -212,6 +304,19 @@ export class TableController {
 
             cell['_tablePatched'] = true;
         });
+    }
+
+
+    public onUpdate(): void {
+        this.view.DOMRoot.querySelectorAll('.table-column').forEach((column: SimpleVirtualDOMElement) => {
+            const colData: ITableColumn = (<any> this.component.columns).get(parseInt(column.getAttribute('column')));
+
+            this.patchSorter(column, colData);
+            this.patchFilter(column, colData);
+        });
+
+        this.patchCells();
+        this.patchCellEvents();
     }
 
 }
