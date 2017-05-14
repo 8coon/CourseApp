@@ -218,11 +218,12 @@ export class TableController {
                     }
 
                     this.clearFilterButtonState();
-                    this.refresh();
 
                     if (this.onQuery) {
                         this.onQuery(this.component);
                     }
+
+                    this.refresh();
                 };
 
                 button.addEventListener('click', buttonClickListener);
