@@ -7,15 +7,12 @@ declare const JSWorks: JSWorksLib;
 
 
 @JSWorks.Controller
-export class MainController {
+export class SignUpController {
 
     public view: View;
 
 
     public onCreate(): void {
-        this.view.DOMRoot.querySelector('h1').addEventListener('click', (event) => {
-            alert('clicked!');
-        });
     }
 
 

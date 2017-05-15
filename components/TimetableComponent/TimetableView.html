@@ -2,26 +2,7 @@
 
     <div class="timetable-wrapper no-select">
 
-        <view-if condition="$.loading || $.error">
-            <view-then>
-                <div class="curtain">
-
-                    <view-if condition="$.loading">
-                        <view-then>
-                            <view-component name="LoadingBlockComponent"></view-component>
-                        </view-then>
-
-                        <view-else>
-                            <div class="component-error">
-                                При загрузке данных произошла ошибка.
-                            </div>
-                        </view-else>
-                    </view-if>
-                </div>
-            </view-then>
-
-            <view-else></view-else>
-        </view-if>
+        <view-include name="LoadingStatusBlockView"></view-include>
 
         <div class="timetable">
 

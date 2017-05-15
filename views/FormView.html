@@ -1,0 +1,19 @@
+<app-view id="FormView" form-view="true">
+
+    <div class="form-loading-status">
+        <view-include name="LoadingStatusBlockView"></view-include>
+    </div>
+
+    <div class="form-content">
+
+        <link-to route="MainRoute">
+            <img src="../static/logo.png" alt="Электронный журнал">
+        </link-to>
+
+        <div class="form-body">
+            <view-yield></view-yield>
+        </div>
+
+    </div>
+
+</app-view>

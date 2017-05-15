@@ -42,7 +42,8 @@ module.exports = {
 
             {
                 test: /\.html$/,
-                loader: htmlExtractTextPlugin.extract({fallback: "html-loader", use: "html-loader"})
+                loader: htmlExtractTextPlugin.extract({fallback: "html-loader?attrs=false",
+                        use: "html-loader?attrs=false"})
             },
         ],
 

@@ -1,4 +1,3 @@
-'use strict';
 import {JSWorksLib} from "jsworks/dist/dts/jsworks";
 
 

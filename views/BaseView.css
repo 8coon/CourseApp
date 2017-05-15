@@ -1,8 +1,45 @@
 
 
+
 body {
     font-family: 'San Francisco UI', 'Helvetica Neue', 'Lucida Sans', sans-serif;
     font-size: 0.8em;
+    padding: 0;
+    margin: 0;
+}
+
+a {
+    cursor: pointer;
+}
+
+button[disabled] {
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+}
+
+button[disabled]:hover {
+    background-color: rgba(49, 112, 205, 0.7);
+}
+
+html, body, app-main, app-main > app-view, .base-container {
+    height: 100%;
+}
+
+hr {
+    border: 0 none;
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    background-color: rgba(49, 112, 205, 0.25);
+    height: 1px;
+    opacity: 0.6;
+    margin-bottom: 10px;
+}
+
+.base-container {
+    overflow: hidden;
+}
+
+.base-container > * {
+    overflow: scroll;
 }
 
 
@@ -16,7 +53,7 @@ body {
 
 
 button {
-    background-color: rgba(49, 112, 205, 0.5);
+    background-color: rgba(49, 112, 205, 0.7);
     color: white;
     border: none;
     cursor: pointer;
@@ -52,5 +89,86 @@ button:active {
     left: 0;
     z-index: 9000;
     background-color: rgba(230, 230, 230, 0.8);
+}
+
+
+.base-container {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+}
+
+.base-left {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    min-width: 200px;
+    max-width: 300px;
+    flex-grow: 0.1;
+    background-color: rgba(49, 112, 205, 0.05);
+}
+
+.base-logo {
+    text-align: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    padding-right: 5px;
+}
+
+.base-content {
+    flex: 1;
+}
+
+
+.base-logo img {
+    width: 200px;
+}
+
+.base-search {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-bottom: 20px;
+}
+
+.base-search button {
+    background-color: rgb(49, 112, 205);
+    padding: 5px;
+    margin: 0;
+}
+
+.base-search input {
+    padding: 5px;
+}
+
+
+.component-error {
+    opacity: 0.9;
+    border-radius: 7px;
+    color: rgb(209, 67, 67);
+    border: 5px solid rgb(209, 67, 67);
+    background-color: rgb(247, 211, 211);;
+    font-weight: 100;
+    padding: 20px 60px;
+}
+
+.component-error * {
+    display: inline;
+}
+
+.component-error a {
+    color: rgba(209, 67, 67, 0.8);
+    text-decoration: none;
+    border-bottom: 1px dashed;
+    font-weight: 300;
+}
+
+
+.component-error a:hover {
+    color: rgba(209, 67, 67, 0.7);
+    text-decoration: none;
+    border-bottom: 1px solid;
 }
 

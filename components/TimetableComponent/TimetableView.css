@@ -126,32 +126,6 @@
 }
 
 
-.component-error {
-    opacity: 0.9;
-    border-radius: 7px;
-    color: rgb(209, 67, 67);
-    border: 5px solid rgb(209, 67, 67);
-    background-color: rgb(247, 211, 211);;
-    font-weight: 100;
-    padding: 20px 60px;
-}
-
-
-.component-error a {
-    color: rgba(209, 67, 67, 0.8);
-    text-decoration: none;
-    border-bottom: 1px dashed;
-    font-weight: 300;
-}
-
-
-.component-error a:hover {
-    color: rgba(209, 67, 67, 0.7);
-    text-decoration: none;
-    border-bottom: 1px solid;
-}
-
-
 .timetable-arrow {
     margin: 10px;
 }

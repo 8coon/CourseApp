@@ -1,6 +1,34 @@
 <app-view id="BaseView">
 
-    <view-yield></view-yield>
+    <div class="base-container">
+
+        <div class="base-left">
+            <div class="base-logo">
+                <link-to route="MainRoute">
+                    <img src="../static/logo.png" alt="Электронный журнал">
+                </link-to>
+            </div>
+
+            <div class="base-search">
+                <input placeholder="Поиск...">
+                <button type="button">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="base-content">
+
+            <div class="base-top-menu">
+                <ul>
+                    <li></li>
+                </ul>
+            </div>
+
+            <view-yield></view-yield>
+        </div>
+
+    </div>
 
     <view-component name="WindowComponent" id="modal-root"></view-component>
 

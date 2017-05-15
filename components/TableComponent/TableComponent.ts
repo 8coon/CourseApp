@@ -24,7 +24,7 @@ export class TableComponent {
     public loading: boolean = false;
 
     @(<any> JSWorks.ComponentProperty())
-    public error: boolean = false;
+    public error: string;
 
 
     @(<any> JSWorks.ComponentProperty())

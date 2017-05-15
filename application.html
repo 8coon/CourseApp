@@ -2,12 +2,16 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Электронный дневник</title>
+    <title>Электронный журнал</title>
 
     <!-- JSWorks import -->
     <script src="/jsworks/jsworks.js"></script>
     <link rel="stylesheet" href="/jsworks/jsworks.css">
     <!-- JSWorks import end -->
+
+    <script>
+        JSWorks._url = 'https://course-project-app.herokuapp.com';
+    </script>
 
     <script src="/application.js"></script>
     <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
@@ -20,6 +24,7 @@
         <app-routes>
 
             <app-route id="MainRoute" page="MainPage" default></app-route>
+            <app-route id="SignUpRoute" page="SignUpPage" match="signup"></app-route>
 
             <app-route match="test">
                 <app-route id="TimetableTestRoute" page="TimetableTestPage" match="timetable"></app-route>
