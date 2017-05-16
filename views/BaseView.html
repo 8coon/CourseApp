@@ -21,7 +21,16 @@
 
             <div class="base-top-menu">
                 <ul>
-                    <li></li>
+                    <li><link-to route="Main">Преподаватели</link-to></li>
+                    <li><link-to route="Main">Курсы</link-to></li>
+                    <li><link-to route="Main">Расписание</link-to></li>
+                </ul>
+                <ul class="user-box">
+                    Здравствуйте,
+                    <view-for variable="user" in="[$.currentUser || {}]">
+                        <view-eval value="(user.first_name || '') + ' ' + (user.last_name || '')"></view-eval>
+                    </view-for>
+                    (<link-to route="Main">Профиль</link-to> | <link-to route="Main">Выход</link-to>)
                 </ul>
             </div>
 

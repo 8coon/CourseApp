@@ -177,3 +177,41 @@ button:active {
     border-bottom: 1px solid;
 }
 
+
+
+.user-box * {
+    display: inline;
+}
+
+.user-box {
+    font-weight: 100;
+    padding-top: 0.4em !important;
+    padding-right: 10px !important;
+}
+
+.base-top-menu {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 30px 20px 0;
+    background-color: rgba(49, 112, 205, 0.05);
+}
+
+.base-top-menu ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.base-top-menu ul li {
+    display: inline-block;
+    background-color: white;
+    border: 1px solid rgba(49, 112, 205, 0.2);
+    color: rgba(49, 112, 205, 0.8);
+    font-size: 120%;
+    font-weight: 100;
+    padding: 5px 10px;
+    margin-right: 10px;
+    border-bottom-style: none;
+}
+
