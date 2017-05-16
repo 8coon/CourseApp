@@ -1,0 +1,19 @@
+
+
+.success {
+    background-color: rgba(125, 202, 109, 0.1);
+    color: rgb(98, 160, 85);
+    padding: 15px;
+    font-size: 120%;
+    font-weight: 100;
+    border-radius: 5px;
+}
+
+
+.login-no-account {
+    font-weight: 100;
+    padding-right: 10px;
+    font-size: 120%;
+}
+
+

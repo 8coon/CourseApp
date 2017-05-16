@@ -13,13 +13,16 @@ export class LandingController {
 
 
     public onCreate(): void {
-        this.view.DOMRoot.querySelector('h1').addEventListener('click', (event) => {
-            alert('clicked!');
-        });
     }
 
 
     public onNavigate(args: object): void {
+        window.setTimeout(() => {
+            JSWorks.applicationContext.router.navigate(
+                JSWorks.applicationContext.routeHolder.getRoute('LoginRoute'),
+                {},
+            )
+        }, 10);
     }
 
 }

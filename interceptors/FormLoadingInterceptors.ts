@@ -27,8 +27,9 @@ export class FormAfterSubmitInterceptor {
             (<any> JSWorks.applicationContext.currentPage).error = args['result'];
         }
 
-        args['form'].clear();
-        alert('success!');
+        if (args['result'] !== undefined) {
+            args['form'].clear();
+        }
 
         return Promise.resolve();
     }

@@ -133,6 +133,27 @@ export class UserModel implements UserModelFields, IModel {
     }
 
 
+    public login(): Promise<UserModel> {
+        return new Promise<UserModel>((resolve, reject) => {
+            (<IModel> this).jsonParser.parseURLAsync(JSWorks['_url'] + '/session/login',
+                JSWorks.HTTPMethod.POST,
+                JSON.stringify({ email: this.email, password: this.password }),
+                { 'Content-Type': 'application/json' },
+            ).then((data) => {
+                if (data['error']) {
+                    reject(data['error']);
+                    return;
+                }
+
+                (<IModel> this).apply(data);
+                resolve(this);
+            }).catch((err) => {
+                reject(err);
+            });
+        });
+    }
+
+
     public loggedIn(): boolean {
         return this.id !== undefined;
     }

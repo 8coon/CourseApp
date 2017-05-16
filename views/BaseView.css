@@ -10,6 +10,11 @@ body {
 
 a {
     cursor: pointer;
+    color: rgb(49, 112, 205);
+}
+
+a:hover {
+    color: rgba(49, 112, 205, 0.6)
 }
 
 button[disabled] {

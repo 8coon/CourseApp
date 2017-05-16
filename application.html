@@ -23,9 +23,14 @@
     <app-info>
         <app-routes>
 
+            <app-route id="LandingRoute" page="LandingPage" default></app-route>
+
             <app-route id="MainRoute" page="MainPage" match="home"></app-route>
             <app-route id="SignUpRoute" page="SignUpPage" match="signup"></app-route>
-            <app-route id="LandingRoute" page="LandingPage" default></app-route>
+
+            <app-route id="LoginRoute" page="LoginPage" match="login">
+                <app-route id="LoginWithUserRoute" page="LoginPage" match=":email"></app-route>
+            </app-route>
 
             <app-route match="test">
                 <app-route id="TimetableTestRoute" page="TimetableTestPage" match="timetable"></app-route>

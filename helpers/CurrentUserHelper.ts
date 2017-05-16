@@ -26,4 +26,11 @@ export class CurrentUserHelper {
     }
 
 
+    public static set currentUser(value: Promise<UserModel>) {
+        value.then((result: UserModel) => {
+            CurrentUserHelper._currentUser = result;
+        });
+    }
+
+
 }

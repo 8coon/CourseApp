@@ -125,3 +125,11 @@ view-include[name="FormFieldView"] {
     opacity: 0.9;
     font-size: 120%;
 }
+
+
+.form-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
