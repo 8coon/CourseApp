@@ -11,7 +11,7 @@ export abstract class AbstractNetworkValidator {
     public abstract relUrl: string;
 
 
-    public intercept(args: object) {
+    public intercept(args: object): Promise<any> {
         return new Promise((resolve, reject) => {
             const jsonParser: JSONParserService = JSWorks.applicationContext.serviceHolder
                 .getServiceByName('JSONParser');

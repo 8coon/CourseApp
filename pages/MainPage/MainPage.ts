@@ -10,15 +10,7 @@ export class MainPage {
 
 
     @(<any> JSWorks.ComponentProperty())
-    public testA: string;
-
-
-    @(<any> JSWorks.ComponentProperty({ onChange: 'onTestBChange' }))
-    public testB: string = 'default';
-
-
-    @(<any> JSWorks.ComponentProperty({ mapping: '#h2@innerHTML' }))
-    public testC: string;
+    public loading: boolean = false;
 
 
 }

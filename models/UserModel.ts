@@ -17,7 +17,7 @@ interface UserModelFields {
 
 
 @JSWorks.Model
-class UserModel implements UserModelFields, IModel {
+export class UserModel implements UserModelFields, IModel {
 
     @JSWorks.ModelField
     @JSWorks.ModelPrimaryKey
@@ -66,7 +66,8 @@ class UserModel implements UserModelFields, IModel {
         return new Promise<UserModel>((resolve, reject) => {
             (<IModel> this).jsonParser.parseURLAsync(JSWorks['_url'] + '/user/create',
                 JSWorks.HTTPMethod.POST,
-                JSON.stringify((<IModel> this).gist())
+                JSON.stringify((<IModel> this).gist()),
+                { 'Content-Type': 'application/json' },
             ).then((data) => {
                 resolve(<UserModel> (<IModel> this).from(data));
             });
@@ -78,7 +79,7 @@ class UserModel implements UserModelFields, IModel {
     public read(id?: number): Promise<UserModel> {
         return new Promise<UserModel>((resolve, reject) => {
             (<IModel> this).jsonParser.parseURLAsync(JSWorks['_url'] + `/user/${id || this.id}`,
-                JSWorks.HTTPMethod.POST
+                JSWorks.HTTPMethod.GET
             ).then((data) => {
                 (<IModel> this).apply(data);
                 resolve(this);
@@ -106,11 +107,34 @@ class UserModel implements UserModelFields, IModel {
         return new Promise<UserModel>((resolve, reject) => {
             (<IModel> this).jsonParser.parseURLAsync(JSWorks['_url'] + '/user/delete',
                 JSWorks.HTTPMethod.POST,
-                JSON.stringify({ id: this.id })
+                JSON.stringify({ id: this.id }),
+                { 'Content-Type': 'application/json' },
             ).then((data) => {
                 resolve(this);
             });
         });
+    }
+
+
+    public current(): Promise<UserModel> {
+        return new Promise<UserModel>((resolve, reject) => {
+            (<IModel> this).jsonParser.parseURLAsync(JSWorks['_url'] + '/session/current',
+                JSWorks.HTTPMethod.GET,
+            ).then((data) => {
+                if (!data['status']) {
+                    (<IModel> this).apply(data);
+                }
+
+                resolve(this);
+            }).catch((err) => {
+                resolve(this);
+            });
+        });
+    }
+
+
+    public loggedIn(): boolean {
+        return this.id !== undefined;
     }
 
 }
