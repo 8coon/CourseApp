@@ -1,5 +1,6 @@
 import {JSWorksLib} from "jsworks/dist/dts/jsworks";
 import {IModel} from "jsworks/dist/dts/Model/IModel"
+import {IQuery} from "../helpers/QueryBuilder";
 
 
 declare const JSWorks: JSWorksLib;
@@ -42,23 +43,41 @@ export class UserModel implements UserModelFields, IModel {
     public password: string;
 
 
-    /* @JSWorks.ModelQueryMethod
-    public query(params?: object): Promise<UserModel[]> {
-        params = params || {};
-        const sort = String(params['sort'] || 'ASC');
+    public get role_text(): string {
+        switch (this.role) {
+            case 0: return 'Администраторы';
+            case 1: return 'Студенты';
+            case 2: return 'Преподаватели';
+        }
+    }
 
-        return new Promise<TestModel[]>((resolve, reject) => {
-            (<IModel> this).jsonParser.parseURLAsync(`/persons/all?sort=${sort}`, JSWorks.HTTPMethod.POST).then((data) => {
-                const models: TestModel[] = [];
+    public set role_text(value: string) {
+        switch (value) {
+            case 'Администраторы': this.role = 0; return;
+            case 'Студенты': this.role = 1; return;
+            case 'Преподаватели': this.role = 2; return;
+        }
+    }
 
-                data.forEach((item: TestModelFields) => {
-                    models.push(this.from(item));
+
+    @JSWorks.ModelQueryMethod
+    public query(params: IQuery): Promise<UserModel[]> {
+        return new Promise<UserModel[]>((resolve, reject) => {
+            (<IModel> this).jsonParser.parseURLAsync(JSWorks['_url'] + '/user/select',
+                JSWorks.HTTPMethod.POST,
+                JSON.stringify((<IModel> this).gist()),
+                { 'Content-Type': 'application/json' },
+            ).then((data: UserModelFields[]) => {
+                const models: UserModel[] = [];
+
+                data.forEach((item: UserModelFields) => {
+                    models.push((<any> this).from(item));
                 });
 
                 resolve(models);
             });
         });
-    } */
+    }
 
 
     @JSWorks.ModelCreateMethod

@@ -36,6 +36,12 @@
                 <app-route id="LoginWithUserRoute" page="LoginPage" match=":email"></app-route>
             </app-route>
 
+
+            <app-route match="admin">
+                <app-route id="AdminUsersRoute" page="AdminUsersPage" match="users"></app-route>
+            </app-route>
+
+
             <app-route match="test">
                 <app-route id="TimetableTestRoute" page="TimetableTestPage" match="timetable"></app-route>
             </app-route>
