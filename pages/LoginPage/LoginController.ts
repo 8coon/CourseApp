@@ -21,25 +21,24 @@ export class LoginController {
     public onCreate(): void {
         this.form = <FormForElement> this.view.DOMRoot.querySelector('#LoginForm');
 
-        this.form.modelSaveCallback = (): Promise<any> => {
-            return (<UserModel> this.form.model).login().then((result) => {
-                console.log(result);
+        this.form.submitCallback = (): Promise<any> => {
+            return (<UserModel> this.form.model)
+                .login()
+                .then((result) => {
+                    CurrentUserHelper.currentUser = Promise.resolve(
+                        JSWorks.applicationContext.modelHolder.getModel('UserModel').from(result),
+                    );
 
-                 CurrentUserHelper.currentUser = Promise.resolve(
-                    JSWorks.applicationContext.modelHolder.getModel('UserModel').from(result),
-                 );
-
-                 window.setTimeout(() => {
-                     JSWorks.applicationContext.router.navigate(
-                         JSWorks.applicationContext.routeHolder.getRoute('MainRoute'),
-                         {},
-                     )
-                 });
-
-                 this.form.clear();
-            }).catch((err) => {
-                this.component.error = 'Неправильный логин или пароль!';
-            })
+                    window.setTimeout(() => {
+                        JSWorks.applicationContext.router.navigate(
+                            JSWorks.applicationContext.routeHolder.getRoute('MainRoute'),
+                            {},
+                        )
+                    });
+                }).catch((err) => {
+                    this.component.error = err;
+                    this.form.model = JSWorks.applicationContext.modelHolder.getModel('UserModel').from();
+                })
         };
     }
 

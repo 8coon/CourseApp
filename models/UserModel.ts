@@ -154,6 +154,21 @@ export class UserModel implements UserModelFields, IModel {
     }
 
 
+    public logout(): Promise<UserModel> {
+        return new Promise<UserModel>((resolve, reject) => {
+            (<IModel> this).jsonParser.parseURLAsync(JSWorks['_url'] + '/session/logout',
+                JSWorks.HTTPMethod.POST,
+                JSON.stringify((<IModel> this).gist()),
+                { 'Content-Type': 'application/json' },
+            ).then((data) => {
+                resolve();
+            }).catch((err) => {
+                resolve();
+            });
+        });
+    }
+
+
     public loggedIn(): boolean {
         return this.id !== undefined;
     }

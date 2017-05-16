@@ -16,10 +16,7 @@ export class CurrentUserInterceptor {
                     return;
                 }
 
-                console.log('intercepted', args);
-
                 JSWorks.applicationContext.currentPage['currentUser'] = user;
-                console.log(args['nextPage'].currentUser);
                 resolve();
             }).catch((err) => {
                 resolve();
