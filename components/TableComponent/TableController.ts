@@ -85,7 +85,6 @@ export class TableController {
                 yesButton.removeEventListeners('click');
                 yesButton.addEventListener('click', () => {
                     const data: object = (<any> this.component.data).get(this.component.selectedRow);
-                    alert(`${JSON.stringify(data)} removed!`);
 
                     if (this.onRemove) {
                         this.onRemove(this.component, data);
@@ -135,15 +134,15 @@ export class TableController {
             switch (colData.order) {
 
                 case 'asc': {
-                    colData.order = undefined;
+                    colData.order = 'desc';
                 } break;
 
                 case 'desc': {
-                    colData.order = 'asc';
+                    colData.order = undefined;
                 } break;
 
                 case undefined: {
-                    colData.order = 'desc';
+                    colData.order = 'asc';
                 }
 
             }
@@ -290,10 +289,6 @@ export class TableController {
                     return;
                 }
 
-                this.view.DOMRoot.querySelectorAll('.table-cell').forEach((anyCell) => {
-                    anyCell.toggleClass('table-cell-hover', false);
-                });
-
                 const highlightCell = (cell: SimpleVirtualDOMElement) => {
                     if (cell.hasClass('table-cell-title') || cell.hasClass('table-cell-selected')) {
                         return;
@@ -303,10 +298,17 @@ export class TableController {
                     cell.toggleClass('table-cell-hover', true);
                 };
 
-                this.view.DOMRoot.querySelectorAll(
-                    `.table-cell[row="${cell.getAttribute('row')}"]`).forEach(highlightCell);
-                this.view.DOMRoot.querySelectorAll(
-                    `.table-cell[column="${cell.getAttribute('column')}"]`).forEach(highlightCell);
+                this.view.DOMRoot.querySelectorAll('.table-cell').forEach((anyCell) => {
+                    if (
+                        anyCell.getAttribute('row') === cell.getAttribute('row') ||
+                        anyCell.getAttribute('column') === cell.getAttribute('column')
+                    ) {
+                        highlightCell(anyCell);
+                        return;
+                    }
+
+                    anyCell.toggleClass('table-cell-hover', false);
+                });
             });
         });
     }

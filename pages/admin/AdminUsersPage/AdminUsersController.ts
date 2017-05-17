@@ -2,6 +2,7 @@ import {JSWorksLib} from "jsworks/dist/dts/jsworks";
 import {AbstractAdminPageController} from "../AbstractAdminPageController";
 import {IQuery} from "../../../helpers/QueryBuilder";
 import {UserModel} from "../../../models/UserModel";
+import {IModel} from "jsworks/dist/dts/Model/IModel";
 
 
 declare const JSWorks: JSWorksLib;
@@ -10,10 +11,8 @@ declare const JSWorks: JSWorksLib;
 @JSWorks.Controller
 export class AdminUsersController extends AbstractAdminPageController {
 
-
-    public query(query: IQuery): Promise<any> {
-        return (<UserModel> JSWorks.applicationContext.modelHolder.getModel('UserModel')).query(query);
-    }
+    public modelName: string = 'UserModel';
+    public addFormName: string = 'UserAddFormView';
 
 
     public setup() {
@@ -25,7 +24,6 @@ export class AdminUsersController extends AbstractAdminPageController {
                 title: 'ID',
                 width: 0.1,
                 canOrder: true,
-                isTitle: true,
             },
             {
                 name: 'first_name',
@@ -50,7 +48,7 @@ export class AdminUsersController extends AbstractAdminPageController {
             },
             {
                 name: 'role_text',
-                title: 'ГРУППА',
+                title: 'РОЛЬ',
                 canOrder: true,
                 canEdit: true,
                 canFilter: true,

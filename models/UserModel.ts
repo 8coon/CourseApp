@@ -1,5 +1,6 @@
 import {JSWorksLib} from "jsworks/dist/dts/jsworks";
 import {IModel} from "jsworks/dist/dts/Model/IModel"
+import {AbstractModel} from "./AbstractModel";
 import {IQuery} from "../helpers/QueryBuilder";
 
 
@@ -18,7 +19,7 @@ interface UserModelFields {
 
 
 @JSWorks.Model
-export class UserModel implements UserModelFields, IModel {
+export class UserModel extends AbstractModel implements UserModelFields, IModel {
 
     @JSWorks.ModelField
     @JSWorks.ModelPrimaryKey
@@ -42,6 +43,8 @@ export class UserModel implements UserModelFields, IModel {
     @JSWorks.ModelField
     public password: string;
 
+    public readonly controllerUrl: string = 'user';
+
 
     public get role_text(): string {
         switch (this.role) {
@@ -57,81 +60,6 @@ export class UserModel implements UserModelFields, IModel {
             case 'Студенты': this.role = 1; return;
             case 'Преподаватели': this.role = 2; return;
         }
-    }
-
-
-    @JSWorks.ModelQueryMethod
-    public query(params: IQuery): Promise<UserModel[]> {
-        return new Promise<UserModel[]>((resolve, reject) => {
-            (<IModel> this).jsonParser.parseURLAsync(JSWorks['_url'] + '/user/select',
-                JSWorks.HTTPMethod.POST,
-                JSON.stringify((<IModel> this).gist()),
-                { 'Content-Type': 'application/json' },
-            ).then((data: UserModelFields[]) => {
-                const models: UserModel[] = [];
-
-                data.forEach((item: UserModelFields) => {
-                    models.push((<any> this).from(item));
-                });
-
-                resolve(models);
-            });
-        });
-    }
-
-
-    @JSWorks.ModelCreateMethod
-    public create(): Promise<UserModel> {
-        return new Promise<UserModel>((resolve, reject) => {
-            (<IModel> this).jsonParser.parseURLAsync(JSWorks['_url'] + '/user/create',
-                JSWorks.HTTPMethod.POST,
-                JSON.stringify((<IModel> this).gist()),
-                { 'Content-Type': 'application/json' },
-            ).then((data) => {
-                resolve(<UserModel> (<IModel> this).from(data));
-            });
-        });
-    }
-
-
-    @JSWorks.ModelReadMethod
-    public read(id?: number): Promise<UserModel> {
-        return new Promise<UserModel>((resolve, reject) => {
-            (<IModel> this).jsonParser.parseURLAsync(JSWorks['_url'] + `/user/${id || this.id}`,
-                JSWorks.HTTPMethod.GET
-            ).then((data) => {
-                (<IModel> this).apply(data);
-                resolve(this);
-            });
-        });
-    }
-
-
-    /* @JSWorks.ModelUpdateMethod
-    public update(): Promise<UserModel> {
-        return new Promise<UserModel>((resolve, reject) => {
-            this.jsonParser.parseURLAsync(JSWorks['_url'] + '/persons/update', JSWorks.HTTPMethod.POST,
-                JSON.stringify(this.gist())).then((data) => {
-                this.apply(data);
-                this.setDirty(false);
-
-                resolve(this);
-            });
-        });
-    } */
-
-
-    @JSWorks.ModelDeleteMethod
-    public ['delete'](): Promise<UserModel> {
-        return new Promise<UserModel>((resolve, reject) => {
-            (<IModel> this).jsonParser.parseURLAsync(JSWorks['_url'] + '/user/delete',
-                JSWorks.HTTPMethod.POST,
-                JSON.stringify({ id: this.id }),
-                { 'Content-Type': 'application/json' },
-            ).then((data) => {
-                resolve(this);
-            });
-        });
     }
 
 
@@ -190,6 +118,37 @@ export class UserModel implements UserModelFields, IModel {
 
     public loggedIn(): boolean {
         return this.id !== undefined;
+    }
+
+
+    constructor() {
+        super();
+    }
+
+
+    @JSWorks.ModelQueryMethod
+    public query(params: IQuery): Promise<AbstractModel[]> {
+        return super.query(params);
+    }
+
+    @JSWorks.ModelCreateMethod
+    public create(): Promise<AbstractModel> {
+        return super.create();
+    }
+
+    @JSWorks.ModelReadMethod
+    public read(id?: number): Promise<AbstractModel> {
+        return super.read(id);
+    }
+
+    @JSWorks.ModelDeleteMethod
+    public ['delete'](): Promise<AbstractModel> {
+        return super.delete();
+    }
+
+    @JSWorks.ModelUpdateMethod
+    public update(): Promise<AbstractModel> {
+        return super.update();
     }
 
 }

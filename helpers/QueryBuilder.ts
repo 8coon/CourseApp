@@ -22,7 +22,7 @@ export class QueryBuilder {
             }
 
             if (column.filter !== undefined) {
-                orders.push([ column.name, column.filter ]);
+                filters.push([ column.name, column.filter ]);
             }
         });
 
