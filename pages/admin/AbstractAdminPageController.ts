@@ -7,6 +7,7 @@ import {IModel} from "jsworks/dist/dts/Model/IModel";
 import {WindowComponent} from "../../components/WindowComponent/WindowComponent";
 import {FormForElement} from "jsworks/dist/dts/CustomElements/ViewElements/FormElements/FormForElement";
 import {AbstractAuthorizingController} from "../AbstractAuthorizingController";
+import {SimpleVirtualDOMElement} from "jsworks/dist/dts/VirtualDOM/SimpleVirtualDOM/SimpleVirtualDOMElement";
 
 
 declare const JSWorks: JSWorksLib;
@@ -32,6 +33,10 @@ export abstract class AbstractAdminPageController extends AbstractAuthorizingCon
     public abstract setup();
     public abstract modelName: string;
     public abstract addFormName: string;
+
+    public onFormOpen(form: FormForElement): Promise<any> {
+        return Promise.resolve();
+    }
 
 
     public onNavigate(): void {
@@ -87,7 +92,15 @@ export abstract class AbstractAdminPageController extends AbstractAuthorizingCon
                 return true;
             };
 
-            windows.openWindow(windowView);
+            const closeButton: SimpleVirtualDOMElement = windowView.DOMRoot.querySelector('.button-close');
+            closeButton.addEventListener('click', () => {
+                form.clear();
+                windows.closeLastWindow();
+            });
+
+            this.onFormOpen(form).then(() => {
+                windows.openWindow(windowView);
+            });
         };
 
 

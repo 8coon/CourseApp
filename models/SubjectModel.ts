@@ -28,6 +28,16 @@ export class SubjectModel extends AbstractModel implements SubjectModelFields {
     @JSWorks.ModelField
     public course_id: number;
 
+    public set _course_id(value) {
+        console.log(value);
+        if (typeof value === 'number') {
+            this.course_id = value;
+            return;
+        }
+
+        this.course_id = parseInt(String(value).split('-')[0].trim(), 10);
+    }
+
     @JSWorks.ModelField
     public course_name: string;
 

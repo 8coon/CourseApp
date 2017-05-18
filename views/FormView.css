@@ -133,3 +133,8 @@ view-include[name="FormFieldView"] {
     justify-content: flex-end;
     align-items: center;
 }
+
+
+.form-buttons button {
+    margin-left: 10px;
+}

@@ -39,7 +39,7 @@
                 </view-include>
             </form-field>
 
-            <form-field for="password">
+            <form-field for="password" validates="PasswordsMatch1Validator">
                 <view-include name="FormFieldView">
 
                     <view-param name="label">Пароль:</view-param>
@@ -50,7 +50,7 @@
                 </view-include>
             </form-field>
 
-            <form-field>
+            <form-field validates="PasswordsMatch2Validator">
                 <view-include name="FormFieldView">
 
                     <view-param name="label">(Ещё раз):</view-param>
@@ -76,6 +76,7 @@
             <hr>
 
             <div class="form-buttons">
+                <button type="button" class="button-close">Отмена</button>
                 <button type="submit" form-submit="true">Добавить</button>
             </div>
 

@@ -17,15 +17,12 @@
                 </view-include>
             </form-field>
 
-             <form-field for="course_id">
+             <form-field for="_course_id" validates="CourseValidator">
                 <view-include name="FormFieldView">
 
                     <view-param name="label">Курс:</view-param>
                     <view-param name="input">
-                        <select form-bind-attribute="selectedIndex">
-                            <option>lol</option>
-                            <option>kek</option>
-                            <option>cheburek</option>
+                        <select form-bind-attribute="value">
                         </select>
                     </view-param>
 
@@ -36,6 +33,7 @@
             <hr>
 
             <div class="form-buttons">
+                <button type="button" class="button-close">Отмена</button>
                 <button type="submit" form-submit="true">Добавить</button>
             </div>
 
