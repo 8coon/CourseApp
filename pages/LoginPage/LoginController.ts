@@ -44,6 +44,12 @@ export class LoginController {
 
 
     public onNavigate(args: object): void {
+        CurrentUserHelper.currentUser.then((user: UserModel) => {
+            if (user.loggedIn()) {
+                user.logout();
+            }
+        });
+
         this.onCreate();
         this.component.email = undefined;
 

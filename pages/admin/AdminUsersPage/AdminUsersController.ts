@@ -49,9 +49,7 @@ export class AdminUsersController extends AbstractAdminPageController {
             {
                 name: 'role_text',
                 title: 'РОЛЬ',
-                canOrder: true,
                 canEdit: true,
-                canFilter: true,
                 type: 'select',
                 selectList: [
                     'Студенты',

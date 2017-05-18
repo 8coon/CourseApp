@@ -1,6 +1,6 @@
 <app-view id="UserAddFormView">
 
-    <h1>Добавить пользователя пользователя</h1>
+    <h1>Добавить пользователя</h1>
     <hr>
 
     <form-for model="UserModel" id="AddForm">
@@ -39,21 +39,6 @@
                 </view-include>
             </form-field>
 
-            <form-field for="role">
-                <view-include name="FormFieldView">
-
-                    <view-param name="label">Группа:</view-param>
-                    <view-param name="input">
-                        <select form-bind-attribute="selectedIndex">
-                            <opinion selected="selected">Администраторы</opinion>
-                            <opinion>Студенты</opinion>
-                            <opinion>Преподаватели</opinion>
-                        </select>
-                    </view-param>
-
-                </view-include>
-            </form-field>
-
             <form-field for="password">
                 <view-include name="FormFieldView">
 
@@ -71,6 +56,17 @@
                     <view-param name="label">(Ещё раз):</view-param>
                     <view-param name="input">
                         <input type="password" form-bind-attribute="value">
+                    </view-param>
+
+                </view-include>
+            </form-field>
+
+            <form-field for="about" style="display: none;">
+                <view-include name="FormFieldView">
+
+                    <view-param name="label"></view-param>
+                    <view-param name="input">
+                        <input form-bind-attribute="value" value="">
                     </view-param>
 
                 </view-include>

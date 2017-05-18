@@ -1,8 +1,7 @@
 import {JSWorksLib} from "jsworks/dist/dts/jsworks";
 import {View} from "jsworks/dist/dts/View/View";
 import {FormForElement} from "jsworks/dist/dts/CustomElements/ViewElements/FormElements/FormForElement";
-import {CurrentUserHelper} from "../../helpers/CurrentUserHelper";
-import {UserModel} from "../../models/UserModel";
+import {AbstractAuthorizingController} from "../AbstractAuthorizingController";
 
 
 declare const JSWorks: JSWorksLib;
@@ -19,7 +18,7 @@ export class SignUpController {
         this.form = <FormForElement> this.view.DOMRoot.querySelector('#SignUpForm');
 
         this.form.onSuccess = (form: FormForElement, data: object): boolean => {
-            alert('success!');
+            this.form.clear();
 
             window.setTimeout(() => {
                 JSWorks.applicationContext.router.navigate(

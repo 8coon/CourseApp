@@ -4,13 +4,14 @@ import {SimpleVirtualDOMElement} from "jsworks/dist/dts/VirtualDOM/SimpleVirtual
 import {CurrentUserHelper} from "../../helpers/CurrentUserHelper";
 import {UserModel} from "../../models/UserModel";
 import {MainPage} from "./MainPage";
+import {AbstractAuthorizingController} from "../AbstractAuthorizingController";
 
 
 declare const JSWorks: JSWorksLib;
 
 
 @JSWorks.Controller
-export class MainController {
+export class MainController extends AbstractAuthorizingController {
 
     public view: View;
     public component: MainPage;
@@ -24,22 +25,7 @@ export class MainController {
 
 
     public onNavigate(args: object): void {
-        this.view.DOMRoot.setStyleAttribute('display', 'none');
-        this.component.loading = true;
-
-        CurrentUserHelper.currentUser.then((user: UserModel) => {
-            this.view.DOMRoot.setStyleAttribute('display', 'inherit');
-            this.component.loading = false;
-
-            if (!user.loggedIn()) {
-                JSWorks.applicationContext.router.navigate(
-                    JSWorks.applicationContext.routeHolder.getRoute('LandingRoute'),
-                    {},
-                );
-
-                return;
-            }
-        });
+        super.onNavigate();
     }
 
 }

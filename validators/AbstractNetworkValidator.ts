@@ -18,7 +18,7 @@ export abstract class AbstractNetworkValidator {
             const page: any = JSWorks.applicationContext.currentPage;
             page.loading = true;
 
-            jsonParser.parseURLAsync(JSWorks['_url'] + this.relUrl,
+            jsonParser.parseURLAsync(JSWorks.config['backendURL'] + this.relUrl,
                 JSWorks.HTTPMethod.POST,
                 JSON.stringify({ value: args['value'] }),
                 { 'Content-Type': 'application/json' },

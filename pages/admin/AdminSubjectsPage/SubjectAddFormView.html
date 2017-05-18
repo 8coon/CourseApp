@@ -1,0 +1,45 @@
+<app-view id="SubjectAddFormView">
+
+    <h1>Добавить предмет</h1>
+    <hr>
+
+    <form-for model="SubjectModel" id="AddForm">
+        <form>
+
+            <form-field for="name">
+                <view-include name="FormFieldView">
+
+                    <view-param name="label">Название:</view-param>
+                    <view-param name="input">
+                        <input form-bind-attribute="value">
+                    </view-param>
+
+                </view-include>
+            </form-field>
+
+             <form-field for="course_id">
+                <view-include name="FormFieldView">
+
+                    <view-param name="label">Курс:</view-param>
+                    <view-param name="input">
+                        <select form-bind-attribute="selectedIndex">
+                            <option>lol</option>
+                            <option>kek</option>
+                            <option>cheburek</option>
+                        </select>
+                    </view-param>
+
+                </view-include>
+            </form-field>
+
+            <div class="form-spacer"></div>
+            <hr>
+
+            <div class="form-buttons">
+                <button type="submit" form-submit="true">Добавить</button>
+            </div>
+
+        </form>
+    </form-for>
+
+</app-view>

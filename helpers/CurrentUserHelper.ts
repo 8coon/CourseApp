@@ -7,7 +7,7 @@ declare const JSWorks: JSWorksLib;
 
 export class CurrentUserHelper {
 
-    private static _currentUser: UserModel;
+    public static _currentUser: UserModel;
 
 
     public static get currentUser(): Promise<UserModel> {

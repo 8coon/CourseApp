@@ -7,7 +7,7 @@ import {IQuery} from "../helpers/QueryBuilder";
 declare const JSWorks: JSWorksLib;
 
 
-interface UserModelFields {
+export interface UserModelFields {
     id: number;
     role: number;
     email: string,
@@ -37,8 +37,10 @@ export class UserModel extends AbstractModel implements UserModelFields, IModel 
     @JSWorks.ModelField
     public last_name: string;
 
+    public set about(value: string) {}
+
     @JSWorks.ModelField
-    public about: string;
+    public get about(): string { return ''; };
 
     @JSWorks.ModelField
     public password: string;
@@ -65,7 +67,7 @@ export class UserModel extends AbstractModel implements UserModelFields, IModel 
 
     public current(): Promise<UserModel> {
         return new Promise<UserModel>((resolve, reject) => {
-            (<IModel> this).jsonParser.parseURLAsync(JSWorks['_url'] + '/session/current',
+            (<IModel> this).jsonParser.parseURLAsync(JSWorks.config['backendURL'] + '/session/current',
                 JSWorks.HTTPMethod.GET,
             ).then((data) => {
                 if (!data['status']) {
@@ -82,7 +84,7 @@ export class UserModel extends AbstractModel implements UserModelFields, IModel 
 
     public login(): Promise<UserModel> {
         return new Promise<UserModel>((resolve, reject) => {
-            (<IModel> this).jsonParser.parseURLAsync(JSWorks['_url'] + '/session/login',
+            (<IModel> this).jsonParser.parseURLAsync(JSWorks.config['backendURL'] + '/session/login',
                 JSWorks.HTTPMethod.POST,
                 JSON.stringify({ email: this.email, password: this.password }),
                 { 'Content-Type': 'application/json' },
@@ -103,7 +105,7 @@ export class UserModel extends AbstractModel implements UserModelFields, IModel 
 
     public logout(): Promise<UserModel> {
         return new Promise<UserModel>((resolve, reject) => {
-            (<IModel> this).jsonParser.parseURLAsync(JSWorks['_url'] + '/session/logout',
+            (<IModel> this).jsonParser.parseURLAsync(JSWorks.config['backendURL'] + '/session/logout',
                 JSWorks.HTTPMethod.POST,
                 JSON.stringify((<IModel> this).gist()),
                 { 'Content-Type': 'application/json' },

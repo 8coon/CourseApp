@@ -94,7 +94,7 @@
                                 <view-case condition="column.foreignKey !== undefined">
                                     <view-for variable="_" in="[column.foreignKey]" static>
                                         <a href="#">
-                                            <view-eval value="row[column.name]"></view-eval>
+                                            <view-eval value="(row || {})[column.name]"></view-eval>
                                         </a>
                                     </view-for>
                                 </view-case>
@@ -106,7 +106,7 @@
                                 </view-case>
 
                                 <view-case condition="column.type !== 'button'">
-                                    <view-eval value="row[column.name] || '&nbsp;'"></view-eval>
+                                    <view-eval value="(row || {})[column.name] || '&nbsp;'"></view-eval>
                                 </view-case>
 
                             </view-switch>

@@ -6,14 +6,14 @@ import {IQuery, QueryBuilder} from "../../helpers/QueryBuilder";
 import {IModel} from "jsworks/dist/dts/Model/IModel";
 import {WindowComponent} from "../../components/WindowComponent/WindowComponent";
 import {FormForElement} from "jsworks/dist/dts/CustomElements/ViewElements/FormElements/FormForElement";
+import {AbstractAuthorizingController} from "../AbstractAuthorizingController";
 
 
 declare const JSWorks: JSWorksLib;
 
 
-export abstract class AbstractAdminPageController {
+export abstract class AbstractAdminPageController extends AbstractAuthorizingController {
 
-    public view: View;
     public table: TableComponent;
 
 
@@ -35,6 +35,8 @@ export abstract class AbstractAdminPageController {
 
 
     public onNavigate(): void {
+        super.onNavigate();
+
         const element: ComponentElement = <ComponentElement> this.view.DOMRoot.querySelector(`#table`);
         this.table = element.component;
 

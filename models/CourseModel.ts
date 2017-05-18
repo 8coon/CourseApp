@@ -7,16 +7,14 @@ import {IQuery} from "../helpers/QueryBuilder";
 declare const JSWorks: JSWorksLib;
 
 
-export interface SubjectModelFields {
+export interface CourseModelFields {
     id: number;
     name: string;
-    course_id: number;
-    course_name: string;
 }
 
 
 @JSWorks.Model
-export class SubjectModel extends AbstractModel implements SubjectModelFields {
+export class CourseModel extends AbstractModel implements CourseModelFields {
 
     @JSWorks.ModelField
     @JSWorks.ModelPrimaryKey
@@ -25,13 +23,7 @@ export class SubjectModel extends AbstractModel implements SubjectModelFields {
     @JSWorks.ModelField
     public name: string;
 
-    @JSWorks.ModelField
-    public course_id: number;
-
-    @JSWorks.ModelField
-    public course_name: string;
-
-    public controllerUrl: string = 'subject';
+    public controllerUrl: string = 'course';
 
 
     constructor() {

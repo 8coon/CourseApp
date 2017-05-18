@@ -19,7 +19,8 @@ export abstract class AbstractModel {
 
     public query(params: IQuery): Promise<AbstractModel[]> {
         return new Promise<AbstractModel[]>((resolve, reject) => {
-            (<IModel> this).jsonParser.parseURLAsync(JSWorks['_url'] + `/${this.controllerUrl}/select`,
+            (<IModel> this).jsonParser.parseURLAsync(JSWorks.config['backendURL'] +
+                    `/${this.controllerUrl}/select`,
                 JSWorks.HTTPMethod.POST,
                 JSON.stringify(params),
                 { 'Content-Type': 'application/json' },
@@ -39,7 +40,8 @@ export abstract class AbstractModel {
 
     public create(): Promise<AbstractModel> {
         return new Promise<AbstractModel>((resolve, reject) => {
-            (<IModel> this).jsonParser.parseURLAsync(JSWorks['_url'] + `/${this.controllerUrl}/create`,
+            (<IModel> this).jsonParser.parseURLAsync(JSWorks.config['backendURL'] +
+                    `/${this.controllerUrl}/create`,
                 JSWorks.HTTPMethod.POST,
                 JSON.stringify((<IModel> this).gist()),
                 { 'Content-Type': 'application/json' },
@@ -52,7 +54,8 @@ export abstract class AbstractModel {
 
     public read(id?: number): Promise<AbstractModel> {
         return new Promise<AbstractModel>((resolve, reject) => {
-            (<IModel> this).jsonParser.parseURLAsync(JSWorks['_url'] + `/${this.controllerUrl}/${id || this.id}`,
+            (<IModel> this).jsonParser.parseURLAsync(JSWorks.config['backendURL'] +
+                    `/${this.controllerUrl}/${id || this.id}`,
                 JSWorks.HTTPMethod.GET
             ).then((data) => {
                 (<IModel> this).apply(data);
@@ -64,7 +67,8 @@ export abstract class AbstractModel {
 
     public update(): Promise<AbstractModel> {
         return new Promise<AbstractModel>((resolve, reject) => {
-            (<IModel> this).jsonParser.parseURLAsync(JSWorks['_url'] + `/${this.controllerUrl}/update`,
+            (<IModel> this).jsonParser.parseURLAsync(JSWorks.config['backendURL'] +
+                    `/${this.controllerUrl}/update`,
                 JSWorks.HTTPMethod.POST,
                 JSON.stringify((<IModel> this).gist()),
                 { 'Content-Type': 'application/json' },
@@ -80,7 +84,8 @@ export abstract class AbstractModel {
 
     public ['delete'](): Promise<AbstractModel> {
         return new Promise<AbstractModel>((resolve, reject) => {
-            (<IModel> this).jsonParser.parseURLAsync(JSWorks['_url'] + `/${this.controllerUrl}/delete`,
+            (<IModel> this).jsonParser.parseURLAsync(JSWorks.config['backendURL'] +
+                    `/${this.controllerUrl}/delete`,
                 JSWorks.HTTPMethod.POST,
                 JSON.stringify({ id: this.id }),
                 { 'Content-Type': 'application/json' },
@@ -89,5 +94,8 @@ export abstract class AbstractModel {
             });
         });
     }
+
+
+    public from(data?: object): AbstractModel { return undefined; };
 
 }
