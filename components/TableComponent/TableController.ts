@@ -280,6 +280,8 @@ export class TableController {
                 });
             }
 
+            cell.toggleClass('cursor-pointer', this.component.onCellClick !== undefined);
+
             cell.removeEventListeners('click');
             cell.addEventListener('click', (event) => {
                 if (this.component.onCellClick) {

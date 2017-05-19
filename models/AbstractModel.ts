@@ -33,6 +33,8 @@ export abstract class AbstractModel {
                 });
 
                 resolve(models);
+            }).catch((err) => {
+                reject(err);
             });
         });
     }
@@ -47,6 +49,8 @@ export abstract class AbstractModel {
                 { 'Content-Type': 'application/json' },
             ).then((data) => {
                 resolve(<AbstractModel> (<IModel> this).from(data));
+            }).catch((err) => {
+                reject(err);
             });
         });
     }
@@ -60,6 +64,8 @@ export abstract class AbstractModel {
             ).then((data) => {
                 (<IModel> this).apply(data);
                 resolve(this);
+            }).catch((err) => {
+                reject(err);
             });
         });
     }
@@ -77,6 +83,8 @@ export abstract class AbstractModel {
                 (<IModel> this).setDirty(false);
 
                 resolve(this);
+            }).catch((err) => {
+                reject(err);
             });
         });
     }
@@ -91,6 +99,8 @@ export abstract class AbstractModel {
                 { 'Content-Type': 'application/json' },
             ).then((data) => {
                 resolve(this);
+            }).catch((err) => {
+                reject(err);
             });
         });
     }

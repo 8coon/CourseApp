@@ -23,6 +23,7 @@
 .window-content {
     background-color: white;
     padding: 30px 60px;
+    width: 500px;
 }
 
 .dialog-content {

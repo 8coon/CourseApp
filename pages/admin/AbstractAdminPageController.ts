@@ -56,6 +56,9 @@ export abstract class AbstractAdminPageController extends AbstractAuthorizingCon
                 table.controller.refresh();
 
                 table.loading = false;
+            }).catch((err) => {
+                table.loading = false;
+                table.error = err;
             });
         };
 
@@ -100,6 +103,8 @@ export abstract class AbstractAdminPageController extends AbstractAuthorizingCon
 
             this.onFormOpen(form).then(() => {
                 windows.openWindow(windowView);
+            }).catch((err) => {
+                table.error = err;
             });
         };
 

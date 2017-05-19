@@ -22,7 +22,7 @@
     font-size: 140%;
     font-weight: 100;
     color: white;
-    padding: 5px;
+    padding: 5px 10px;
 }
 
 
@@ -36,4 +36,14 @@
 
 .calendar-scroller:hover {
     background-color: rgba(255, 255, 255, 0.2);
+}
+
+
+.calendar-month {
+    min-width: 170px;
+    text-align: center;
+}
+
+.calendar-month * {
+    text-align: center;
 }

@@ -135,7 +135,7 @@ export class CalendarController {
 
             const daysInMonth: number = new Date(date.getFullYear(), date.getMonth(), 0).getDate();
 
-            if ((weekdaysCount > 6) || (date.getDate() > daysInMonth)) {
+            if (weekdaysCount > 6) {
                 weeks.push(weekdays);
                 weekdays = {};
                 weekdaysCount = 0;
