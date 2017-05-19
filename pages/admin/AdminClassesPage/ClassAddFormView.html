@@ -64,10 +64,24 @@
                 </view-include>
             </form-field>
 
-            <form-field for="begin_time">
+            <form-field for="_date">
                 <view-include name="FormFieldView">
 
-                    <view-param name="label">Начало:</view-param>
+                    <view-param name="label">Дата:</view-param>
+                    <view-param name="input">
+                        <input class="show-calendar" readonly="readonly"
+                               placeholder="Нажмите для выбора..." form-bind-attribute="value">
+                    </view-param>
+
+                </view-include>
+            </form-field>
+
+            <view-component name="CalendarComponent" class="select-date"></view-component>
+
+            <form-field for="_time_begin">
+                <view-include name="FormFieldView">
+
+                    <view-param name="label">Время начала:</view-param>
                     <view-param name="input">
                         <input type="datetime" form-bind-attribute="value">
                     </view-param>
@@ -75,16 +89,17 @@
                 </view-include>
             </form-field>
 
-            <form-field for="end_time">
+            <form-field for="_time_end">
                 <view-include name="FormFieldView">
 
-                    <view-param name="label">Конец:</view-param>
+                    <view-param name="label">Время конца:</view-param>
                     <view-param name="input">
                         <input type="datetime" form-bind-attribute="value">
                     </view-param>
 
                 </view-include>
             </form-field>
+
 
             <div class="form-spacer"></div>
             <hr>

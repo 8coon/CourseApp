@@ -9,6 +9,8 @@ import {SimpleVirtualDOMElement} from "jsworks/dist/dts/VirtualDOM/SimpleVirtual
 import {SimpleVirtualDOM} from "jsworks/dist/dts/VirtualDOM/SimpleVirtualDOM/SimpleVirtualDOM";
 import {SubjectModel} from "../../../models/SubjectModel";
 import {GroupModel} from "../../../models/GroupModel";
+import {CalendarComponent} from "../../../components/CalendarComponent/CalendarComponent";
+import {ComponentElement} from "jsworks/dist/dts/CustomElements/ViewElements/ComponentElement";
 
 
 declare const JSWorks: JSWorksLib;
@@ -22,6 +24,30 @@ export class AdminClassesController extends AbstractAdminPageController {
 
 
     public onFormOpen(form: FormForElement): Promise<any> {
+        const calendar: CalendarComponent = <CalendarComponent> (<ComponentElement> form
+            .querySelector('.select-date')).component;
+        const dateInput: SimpleVirtualDOMElement = form.querySelector('.show-calendar');
+
+        dateInput.removeEventListeners('focus');
+        dateInput.addEventListener('focus', () => {
+            const boundingRect = (<HTMLElement> dateInput.rendered).getBoundingClientRect();
+
+            calendar.controller.setDate((<any> dateInput.rendered).value);
+            calendar.controller.show(boundingRect.left, boundingRect.top);
+        });
+
+        dateInput.removeEventListeners('blur');
+        dateInput.addEventListener('blur', () => {
+            /* window.setTimeout(() => {
+                calendar.controller.hide();
+            }, 100); */
+        });
+
+        calendar.controller.onSelect = (calendar: CalendarComponent, date: Date) => {
+            dateInput.rendered['value'] = date.toDateString();
+        };
+
+
         const virtualDOM: SimpleVirtualDOM = JSWorks.applicationContext.serviceHolder
             .getServiceByName('SimpleVirtualDOM');
         const select: SimpleVirtualDOMElement = form.querySelector('.select-course');

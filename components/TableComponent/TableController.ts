@@ -35,42 +35,62 @@ export class TableController {
     public onDOMInsert(): void {
         this.refresh();
 
-        this.view.DOMRoot.querySelector('.table-drop-filters-button').addEventListener('click', (event) => {
-            this.clearFilterButtonState();
+        if (!this.component.toolbox) {
+            return;
+        }
 
-            const values = this.triggerRefresh();
+        let button: SimpleVirtualDOMElement;
 
-            (<any> this.component.columns).setValues(values.map((column: ITableColumn) => {
-                const returning: ITableColumn = { name: '', title: '' };
+        button = this.view.DOMRoot.querySelector('.table-drop-filters-button');
+        if (button) {
+            button.addEventListener('click', (event) => {
+                this.clearFilterButtonState();
 
-                Object.keys(column).forEach((keyName: string) => {
-                    returning[keyName] = column[keyName];
-                });
+                const values = this.triggerRefresh();
 
-                returning.filter = undefined;
-                returning.order = undefined;
-                return returning;
-            }));
-        });
+                (<any> this.component.columns).setValues(values.map((column: ITableColumn) => {
+                    const returning: ITableColumn = {name: '', title: ''};
+
+                    Object.keys(column).forEach((keyName: string) => {
+                        returning[keyName] = column[keyName];
+                    });
+
+                    returning.filter = undefined;
+                    returning.order = undefined;
+                    return returning;
+                }));
+            });
+        }
 
 
-        this.view.DOMRoot.querySelector('.table-add-button').addEventListener('click', () => {
-            if (this.onAdd) {
-                this.onAdd(this.component);
-            }
-        });
+        button = this.view.DOMRoot.querySelector('.table-add-button');
+        if (button) {
+            button.addEventListener('click', () => {
+                if (this.onAdd) {
+                    this.onAdd(this.component);
+                }
+            });
+        }
 
 
-        this.view.DOMRoot.querySelector('.table-refresh-button').addEventListener('click', () => {
-            if (this.onQuery) {
-                this.onQuery(this.component);
-            }
+        button = this.view.DOMRoot.querySelector('.table-refresh-button');
+        if (button) {
+            button.addEventListener('click', () => {
+                if (this.onQuery) {
+                    this.onQuery(this.component);
+                }
 
-            this.refresh();
-        });
-
+                this.refresh();
+            });
+        }
 
         window.setTimeout(() => {
+            button = this.view.DOMRoot.querySelector('.table-remove-button');
+
+            if (!button) {
+                return;
+            }
+
             this.view.DOMRoot.querySelector('.table-remove-button').addEventListener('click', () => {
                 if (this.view.DOMRoot.querySelector('.table-remove-button').hasClass('table-inactive-button')) {
                     return;
@@ -105,15 +125,17 @@ export class TableController {
 
 
     public refresh(): void {
-        if (this.component.total === 0) {
-            this.view.DOMRoot.querySelector('.table-pager-text').children.item(0).text
-                    = `Нет записей`;
-        } else {
-            this.view.DOMRoot.querySelector('.table-pager-text').children.item(0).text
-                    = `Показаны записи с ${this.component.offset + 1} по ${
+        const paginator: SimpleVirtualDOMElement = this.view.DOMRoot.querySelector('.table-pager-text');
+
+        if (paginator) {
+            if (this.component.total === 0) {
+                paginator.children.item(0).text = `Нет записей`;
+            } else {
+                paginator.children.item(0).text = `Показаны записи с ${this.component.offset + 1} по ${
                     ((this.component.offset + this.component.limit) > this.component.total) ?
                         this.component.total : (this.component.offset + this.component.limit)}
                         из ${this.component.total}`;
+            }
         }
 
         const values = this.triggerRefresh();
@@ -259,7 +281,16 @@ export class TableController {
             }
 
             cell.removeEventListeners('click');
-            cell.addEventListener('click', () => {
+            cell.addEventListener('click', (event) => {
+                if (this.component.onCellClick) {
+                    this.component.onCellClick(
+                        this.component,
+                        parseInt(cell.getAttribute('row'), 10),
+                        parseInt(cell.getAttribute('column'), 10),
+                        (<any> this.component.data).get(parseInt(cell.getAttribute('row'), 10)),
+                    );
+                }
+
                 if (!this.component.selectable || this.component.isEditing) {
                     return;
                 }
@@ -464,7 +495,7 @@ export class TableController {
     private patchPager(): void {
         const pager: SimpleVirtualDOMElement = this.view.DOMRoot.querySelector('.table-pager');
 
-        if (pager['_tablePatched']) {
+        if (!pager || pager['_tablePatched']) {
             return;
         }
 
