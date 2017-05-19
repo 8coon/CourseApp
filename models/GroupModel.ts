@@ -7,26 +7,28 @@ import {IQuery} from "../helpers/QueryBuilder";
 declare const JSWorks: JSWorksLib;
 
 
-export interface SubjectModelFields {
+export interface GroupModelFields {
     id: number;
-    name: string;
     course_id: number;
-    course_name: string;
+    name: string;
 }
 
 
 @JSWorks.Model
-export class SubjectModel extends AbstractModel implements SubjectModelFields {
+export class GroupModel extends AbstractModel implements GroupModelFields {
 
     @JSWorks.ModelField
     @JSWorks.ModelPrimaryKey
     public id: number;
 
     @JSWorks.ModelField
-    public name: string;
+    public course_id: number;
 
     @JSWorks.ModelField
-    public course_id: number;
+    public name: string;
+
+    public controllerUrl: string = 'group';
+
 
     public set _course_id(value) {
         if (typeof value === 'number') {
@@ -36,11 +38,6 @@ export class SubjectModel extends AbstractModel implements SubjectModelFields {
 
         this.course_id = parseInt(String(value).split('-')[0].trim(), 10);
     }
-
-    @JSWorks.ModelField
-    public course_name: string;
-
-    public controllerUrl: string = 'subject';
 
 
     constructor() {

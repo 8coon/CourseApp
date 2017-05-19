@@ -1,0 +1,100 @@
+<app-view id="ClassAddFormView">
+
+    <h1>Добавить занятие</h1>
+    <hr>
+
+    <form-for model="ClassModel" id="AddForm">
+        <form>
+
+            <form-field for="_course_id" validates="CourseValidator">
+                <view-include name="FormFieldView">
+
+                    <view-param name="label">Курс:</view-param>
+                    <view-param name="input">
+                        <select class="select-course" form-bind-attribute="value">
+                        </select>
+                    </view-param>
+
+                </view-include>
+            </form-field>
+
+            <form-field for="_subject_id" validates="CourseValidator">
+                <view-include name="FormFieldView">
+
+                    <view-param name="label">Предмет:</view-param>
+                    <view-param name="input">
+                        <select class="select-subject" form-bind-attribute="value">
+                        </select>
+                    </view-param>
+
+                </view-include>
+            </form-field>
+
+            <form-field for="_group_id" validates="CourseValidator">
+                <view-include name="FormFieldView">
+
+                    <view-param name="label">Группа:</view-param>
+                    <view-param name="input">
+                        <select class="select-group" form-bind-attribute="value">
+                        </select>
+                    </view-param>
+
+                </view-include>
+            </form-field>
+
+            <form-field for="location">
+                <view-include name="FormFieldView">
+
+                    <view-param name="label">Место проведения:</view-param>
+                    <view-param name="input">
+                        <input type="datetime" form-bind-attribute="value">
+                    </view-param>
+
+                </view-include>
+            </form-field>
+
+            <form-field for="topic">
+                <view-include name="FormFieldView">
+
+                    <view-param name="label">Тема занятия:</view-param>
+                    <view-param name="input">
+                        <input type="datetime" form-bind-attribute="value">
+                    </view-param>
+
+                </view-include>
+            </form-field>
+
+            <form-field for="begin_time">
+                <view-include name="FormFieldView">
+
+                    <view-param name="label">Начало:</view-param>
+                    <view-param name="input">
+                        <input type="datetime" form-bind-attribute="value">
+                    </view-param>
+
+                </view-include>
+            </form-field>
+
+            <form-field for="end_time">
+                <view-include name="FormFieldView">
+
+                    <view-param name="label">Конец:</view-param>
+                    <view-param name="input">
+                        <input type="datetime" form-bind-attribute="value">
+                    </view-param>
+
+                </view-include>
+            </form-field>
+
+            <div class="form-spacer"></div>
+            <hr>
+
+            <div class="form-buttons">
+                <button type="button" class="button-close">Отмена</button>
+                <button type="submit" form-submit="true">Добавить</button>
+            </div>
+
+        </form>
+    </form-for>
+
+</app-view>
