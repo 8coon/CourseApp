@@ -29,7 +29,15 @@ export abstract class AbstractAuthorizingController {
 
                 return;
             }
-        });
+        }).catch((error) => {
+            this.view.DOMRoot.setStyleAttribute('display', 'inherit');
+            this.component.loading = false;
+
+            JSWorks.applicationContext.router.navigate(
+                JSWorks.applicationContext.routeHolder.getRoute('LandingRoute'),
+                {},
+            );
+        })
     }
 
 }

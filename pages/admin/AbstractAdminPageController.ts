@@ -54,6 +54,7 @@ export abstract class AbstractAdminPageController extends AbstractAuthorizingCon
                 table.total = (result[0] || { total: 0 }).total;
                 (<any> table.columns).update();
                 table.controller.refresh();
+                table.error = undefined;
 
                 table.loading = false;
             }).catch((err) => {

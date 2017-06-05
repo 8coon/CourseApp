@@ -11,7 +11,7 @@ export class TimeValidator {
 
     public intercept(args: object): Promise<any> {
         return new Promise((resolve, reject) => {
-            if (/\d{1,2}:\d{1,2}/g.exec(String(args['value']))) {
+            if (/^\d{1,2}:\d{1,2}$/g.exec(String(args['value']))) {
                 resolve();
                 return;
             }

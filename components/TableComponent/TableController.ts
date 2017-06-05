@@ -59,6 +59,12 @@ export class TableController {
                     returning.order = undefined;
                     return returning;
                 }));
+
+                if (this.onQuery) {
+                    this.onQuery(this.component);
+                }
+
+                this.refresh();
             });
         }
 
@@ -120,7 +126,7 @@ export class TableController {
 
                 windows.openWindow(windowView);
             });
-        }, 100);
+        }, 10);
     }
 
 
