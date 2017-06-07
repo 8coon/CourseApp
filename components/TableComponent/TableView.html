@@ -99,13 +99,16 @@
                                     </view-for>
                                 </view-case>
 
-                                <view-case condition="column.type === 'button'">
+                                <view-case condition="column.type === 'button' &&
+                                        (row || {})['_button_' + column.name] !== false">
                                     <button type="button">
                                         <view-eval value="column.buttonText || '&nbsp;'"></view-eval>
                                     </button>
                                 </view-case>
 
-                                <view-case condition="column.type !== 'button'">
+                                <view-case condition="column.type !== 'button' ||
+                                        (column.type === 'button' &&
+                                            (row || {})['_button_' + column.name] === false)">
                                     <div class="table-cell-value-container cursor-pointer">
                                         <view-eval value="(row || {})[column.name] || '&nbsp;'">
                                         </view-eval>

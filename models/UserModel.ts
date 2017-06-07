@@ -172,4 +172,20 @@ export class UserModel extends AbstractModel implements UserModelFields, IModel 
         });
     }
 
+
+    public requestCourse(courseId: number): Promise<void> {
+        return new Promise<void>((resolve, reject) => {
+            (<IModel> this).jsonParser.parseURLAsync(JSWorks.config['backendURL'] +
+                `/student/createRequest`,
+                JSWorks.HTTPMethod.POST,
+                JSON.stringify({ id: courseId }),
+                { 'Content-Type': 'application/json' },
+            ).then(() => {
+                resolve();
+            }).catch((err) => {
+                reject(err);
+            });
+        });
+    }
+
 }

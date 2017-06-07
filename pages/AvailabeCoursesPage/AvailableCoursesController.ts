@@ -30,6 +30,7 @@ export class AvailableCoursesController extends AbstractAuthorizingController {
         this.courses = (<ComponentElement> this.view.DOMRoot.querySelector('#available-courses'))
                 .component;
         this.courses.selectable = false;
+        this.courses.title = 'Доступные курсы';
         this.courses.loading = true;
 
         this.userModel.availableCourses().then((courses: StudentAvailableCourse[]) => {
@@ -40,15 +41,27 @@ export class AvailableCoursesController extends AbstractAuthorizingController {
                     isTitle: true,
                 },
                 {
-                    name: '',
+                    name: 'status',
                     title: ' ',
                     type: 'button',
                     buttonText: 'Подать заявку',
-                    width: 0.3,
                     isTitle: true,
 
                     onButtonClick: (table: TableComponent, data: StudentAvailableCourse) => {
-                        alert(JSON.stringify(data));
+                        this.component.loading = true;
+                        this.component['error'] = undefined;
+
+                        this.userModel.requestCourse(data.id).then(() => {
+                            this.component.loading = false;
+
+                            data['_button_status'] = false;
+                            data['status'] = 'Заявка отправлена';
+
+                            this.courses.controller.refresh();
+                        }).catch((err) => {
+                            this.component.loading = false;
+                            this.component['error'] = err;
+                        });
                     }
                 },
             ];
