@@ -59,7 +59,12 @@ export class CurrentUserHelper {
                                             group_name: "AПО-21",
                                             subjects: [
                                                 {subject_id: 1, subject_name: "DataBase", total: 80, mark_name: 'хор'},
-                                                {subject_id: 2, subject_name: "Front-end", total: 100, mark_name: 'отл'},
+                                                {
+                                                    subject_id: 2,
+                                                    subject_name: "Front-end",
+                                                    total: 100,
+                                                    mark_name: 'отл'
+                                                },
                                                 {subject_id: 3, subject_name: "Back-end", total: 50, mark_name: 'удовл'}
                                             ]
                                         },
@@ -82,7 +87,34 @@ export class CurrentUserHelper {
                         case 2:
                             (<IModel> user).jsonParser.parseURLAsync(JSWorks.config['backendURL'] + '/professor/info',
                                 JSWorks.HTTPMethod.GET)
-                                .then(data => resolve(data));
+                                .then(data => {
+                                    console.log(data);
+
+                                    data = [
+                                        {
+                                            course_id: 1,
+                                            course_name: 'technopark 2 sem',
+                                            subject_id: 1,
+                                            subject_name: 'Front-end',
+                                            groups: [
+                                                {group_id: 1, group_name: 'АПО-21'},
+                                                {group_id: 2, group_name: 'АПО-22'}
+                                            ]
+                                        },
+                                        {
+                                            course_id: 1,
+                                            course_name: 'technopark 2 sem',
+                                            subject_id: 2,
+                                            subject_name: 'Java',
+                                            groups: [
+                                                {group_id: 1, group_name: 'АПО-21'},
+                                                {group_id: 2, group_name: 'АПО-22'}
+                                            ]
+                                        }
+                                        ];
+
+                                    resolve(data);
+                                });
                             break;
                     }
                 })

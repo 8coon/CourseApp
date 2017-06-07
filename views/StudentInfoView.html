@@ -1,5 +1,10 @@
 <app-view id="StudentInfoView">
 
+    <h2>
+        <view-for variable="user" in="[$.currentUser || {}]">
+            <view-eval value="(user.first_name || '') + ' ' + (user.last_name || '')"></view-eval>
+        </view-for>
+    </h2>
 
     <h4>Краткая сводка успеваемости</h4>
     <view-for variable="course" in="($.info)? $.info : [{}]">
