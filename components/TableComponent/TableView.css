@@ -118,7 +118,8 @@
     padding: 5px;
     border-bottom: 1px solid rgba(51, 51, 51, 0.1);
     border-left: 1px solid rgba(51, 51, 51, 0.1);
-    overflow: hidden;
+    /*overflow: hidden;*/
+    overflow: visible;
     height: 1.2em;
 }
 
@@ -255,4 +256,24 @@
 
 .cursor-pointer {
     cursor: pointer;
+}
+
+
+.table-cell-tooltip {
+    visibility: hidden;
+    background-color: beige;
+    padding: 5px;
+    font-style: italic;
+
+    position: absolute;
+    z-index: 1000000;
+    bottom: 20px;
+}
+
+.table-cell-value-container {
+    position: relative;
+}
+
+.table-cell-value-container:hover .table-cell-tooltip {
+    visibility: visible;
 }

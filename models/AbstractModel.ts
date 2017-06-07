@@ -8,6 +8,14 @@ declare const JSWorks: JSWorksLib;
 
 export abstract class AbstractModel {
 
+    public static parseNumber(value: any): number {
+        if (typeof value === 'number') {
+            return value;
+        }
+
+        return parseInt(String(value).split('-')[0].trim(), 10);
+    }
+
 
     public abstract get controllerUrl(): string;
     public abstract id: number;

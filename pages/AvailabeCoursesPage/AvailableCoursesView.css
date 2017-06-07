@@ -1,0 +1,10 @@
+
+
+#available-courses .table-toolbox-button {
+    display: none;
+}
+
+
+#available-courses .table-pager {
+    display: none;
+}

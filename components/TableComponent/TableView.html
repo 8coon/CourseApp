@@ -106,7 +106,20 @@
                                 </view-case>
 
                                 <view-case condition="column.type !== 'button'">
-                                    <view-eval value="(row || {})[column.name] || '&nbsp;'"></view-eval>
+                                    <div class="table-cell-value-container cursor-pointer">
+                                        <view-eval value="(row || {})[column.name] || '&nbsp;'">
+                                        </view-eval>
+
+                                        <view-if condition="(row || {})['_tooltip_' + column.name]
+                                                !== undefined" static>
+                                            <view-then>
+                                                <view-eval class="table-cell-tooltip"
+                                                           value="(row || {})['_tooltip_' +
+                                                                column.name]"></view-eval>
+                                            </view-then>
+                                            <view-else></view-else>
+                                        </view-if>
+                                    </div>
                                 </view-case>
 
                             </view-switch>

@@ -17,6 +17,11 @@ export interface UserModelFields {
     password?: string;
 }
 
+export interface StudentAvailableCourse {
+    id: number;
+    name: string;
+}
+
 
 @JSWorks.Model
 export class UserModel extends AbstractModel implements UserModelFields, IModel {
@@ -151,6 +156,20 @@ export class UserModel extends AbstractModel implements UserModelFields, IModel 
     @JSWorks.ModelUpdateMethod
     public update(): Promise<AbstractModel> {
         return super.update();
+    }
+
+
+    public availableCourses(): Promise<StudentAvailableCourse[]> {
+        return new Promise<StudentAvailableCourse[]>((resolve, reject) => {
+            (<IModel> this).jsonParser.parseURLAsync(JSWorks.config['backendURL'] +
+                    `/student/avaliableCourses`,
+                JSWorks.HTTPMethod.GET,
+            ).then((data: StudentAvailableCourse[]) => {
+                resolve(data);
+            }).catch((err) => {
+                reject(err);
+            });
+        });
     }
 
 }

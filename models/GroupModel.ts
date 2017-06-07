@@ -31,12 +31,7 @@ export class GroupModel extends AbstractModel implements GroupModelFields {
 
 
     public set _course_id(value) {
-        if (typeof value === 'number') {
-            this.course_id = value;
-            return;
-        }
-
-        this.course_id = parseInt(String(value).split('-')[0].trim(), 10);
+        this.course_id = AbstractModel.parseNumber(value);
     }
 
 
