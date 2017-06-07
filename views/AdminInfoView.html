@@ -1,0 +1,67 @@
+<app-view id="AdminInfoView" >
+
+    <h2>
+        <view-for variable="user" in="[$.currentUser || {}]">
+            <view-eval value="(user.first_name || '') + ' ' + (user.last_name || '')"></view-eval>
+        </view-for>
+        Администратор
+    </h2>
+
+    <h2>Состояние системы</h2>
+
+    <div class="admin-stats">
+        <div class="admin-stats__row">
+            <div>Количество пользователей системы</div>
+            <view-for variable="users" in="[($.info && ($.info.users >= 0))?$.info.users : {}]">
+                <view-eval value="users"></view-eval>
+            </view-for>
+        </div>
+        <div class="admin-stats__row">
+            <div>Количество администраторов</div>
+            <view-for variable="admins" in="[($.info && ($.info.admins >= 0)) ? $.info.admins : {}]">
+                <view-eval value="admins"></view-eval>
+            </view-for>
+        </div>
+        <div class="admin-stats__row">
+            <div>Количество студентов</div>
+            <view-for variable="students" in="[($.info && ($.info.students >= 0))? $.info.students :  {}]">
+                <view-eval value="students"></view-eval>
+            </view-for>
+        </div>
+        <div class="admin-stats__row">
+            <div>Количество преподавателей</div>
+            <view-for variable="professors" in="[($.info && ($.info.professors >= 0))? $.info.professors : {}]">
+                <view-eval value="professors"></view-eval>
+            </view-for>
+        </div>
+        <div class="admin-stats__row">
+            <div>Количество курсов</div>
+            <view-for variable="courses" in="[($.info && ($.info.courses >= 0))? $.info.courses : {}]">
+                <view-eval value="courses"></view-eval>
+            </view-for>
+        </div>
+
+        <div class="admin-stats__row">
+            <div>Количество предметов</div>
+            <view-for variable="subjects" in="[($.info && ($.info.subjects >= 0))? $.info.subjects : {}]">
+                <view-eval value="subjects"></view-eval>
+            </view-for>
+        </div>
+
+        <div class="admin-stats__row">
+            <div>Количество групп</div>
+            <view-for variable="groups" in="[($.info && ($.info.groups >= 0))? $.info.groups : {}]">
+                <view-eval value="groups"></view-eval>
+            </view-for>
+        </div>
+
+        <div class="admin-stats__row">
+            <div>Количество заявок на курсы</div>
+            <view-for variable="requests" in="[($.info && ($.info.requests >= 0)) ? $.info.requests : {}]">
+                <view-eval value="requests"></view-eval>
+            </view-for>
+        </div>
+
+    </div>
+
+</app-view>

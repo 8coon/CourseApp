@@ -1,5 +1,6 @@
 import {JSWorksLib} from "jsworks/dist/dts/jsworks";
 import {UserModel} from "../models/UserModel";
+import {IModel} from "jsworks/dist/dts/Model/IModel";
 
 
 declare const JSWorks: JSWorksLib;
@@ -32,5 +33,34 @@ export class CurrentUserHelper {
         });
     }
 
+    public static getInfo(): Promise<any> {
+        return new Promise<any>((resolve, reject) => {
+            CurrentUserHelper
+                .currentUser
+                .then((user: UserModel) => {
+
+                    switch (user.role) {
+                        case 0:
+                            (<IModel> user).jsonParser.parseURLAsync(JSWorks.config['backendURL'] + '/admin/info',
+                                JSWorks.HTTPMethod.GET)
+                                .then(data => resolve(data));
+                            break;
+
+                        case 1:
+                            (<IModel> user).jsonParser.parseURLAsync(JSWorks.config['backendURL'] + '/student/info',
+                                JSWorks.HTTPMethod.GET)
+                                .then(data => resolve(data));
+                            break;
+
+                        case 2:
+                            (<IModel> user).jsonParser.parseURLAsync(JSWorks.config['backendURL'] + '/professor/info',
+                                JSWorks.HTTPMethod.GET)
+                                .then(data => resolve(data));
+                            break;
+                    }
+                })
+        })
+
+    }
 
 }
