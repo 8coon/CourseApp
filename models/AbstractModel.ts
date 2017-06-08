@@ -37,6 +37,7 @@ export abstract class AbstractModel {
                 JSON.stringify(params),
                 { 'Content-Type': 'application/json' },
             ).then((data: any) => {
+                console.log(data);
                 const models: AbstractModel[] = [];
 
                 data.entries.forEach((item) => {
@@ -45,7 +46,6 @@ export abstract class AbstractModel {
                 });
 
                 resolve(models);
-                console.log(models);
             }).catch((err) => {
                 reject(err);
             });

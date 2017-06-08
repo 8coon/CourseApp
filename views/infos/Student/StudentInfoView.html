@@ -1,0 +1,16 @@
+<app-view id="StudentInfoView">
+
+    <h2>
+        <view-for variable="user" in="[$.currentUser || {}]">
+            <view-eval value="(user.first_name || '') + ' ' + (user.last_name || '')"></view-eval>
+        </view-for>
+    </h2>
+
+    <h4>Краткая сводка успеваемости</h4>
+
+    <view-for variable="course" in="$.studentCourses">
+        <view-component name="TableComponent" class="student-stat-table" id="course-${course.course_id}">
+        </view-component>
+    </view-for>
+
+</app-view>

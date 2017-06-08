@@ -1,12 +1,5 @@
 <app-view id="AdminInfoView" >
 
-    <h2>
-        <view-for variable="user" in="[$.currentUser || {}]">
-            <view-eval value="(user.first_name || '') + ' ' + (user.last_name || '')"></view-eval>
-        </view-for>
-        Администратор
-    </h2>
-
     <h2>Состояние системы</h2>
 
     <div class="admin-stats">

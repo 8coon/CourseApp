@@ -28,6 +28,33 @@ export interface ProfessorSubject {
 }
 
 
+export interface StudentSubject {
+    mark_name: string;
+    subject_id: number;
+    subject_name: string;
+    total: number;
+}
+
+export interface StudentCourse {
+    course_id: number;
+    course_name: string;
+    group_id: number;
+    group_name: string;
+    subjects: StudentSubject[];
+}
+
+export interface StudentInfo {
+
+}
+
+export interface ProfessorInfo {
+
+}
+
+export interface AdminInfo {
+}
+
+
 @JSWorks.Model
 export class UserModel extends AbstractModel implements UserModelFields, IModel {
 
@@ -209,6 +236,28 @@ export class UserModel extends AbstractModel implements UserModelFields, IModel 
                 JSWorks.HTTPMethod.GET,
             ).then((subjects: ProfessorSubject[]) => {
                 resolve(subjects);
+            }).catch((err) => {
+                reject(err);
+            });
+        });
+    }
+
+
+    public info(): Promise<StudentInfo | ProfessorInfo | AdminInfo> {
+        let role: string;
+
+        switch (this.role) {
+            case 0: role = 'admin'; break;
+            case 1: role = 'student'; break;
+            case 2: role = 'professor'; break;
+        }
+
+        return new Promise<StudentInfo | ProfessorInfo | AdminInfo>((resolve, reject) => {
+            (<IModel> this).jsonParser.parseURLAsync(JSWorks.config['backendURL'] +
+                `/${role}/info`,
+                JSWorks.HTTPMethod.GET,
+            ).then((info: StudentInfo | ProfessorInfo | AdminInfo) => {
+                resolve(info);
             }).catch((err) => {
                 reject(err);
             });

@@ -1,6 +1,6 @@
 'use strict';
 import {JSWorksLib} from "jsworks/dist/dts/jsworks";
-import {UserModel} from "../../models/UserModel";
+import {UserModel, StudentCourse} from "../../models/UserModel";
 
 
 declare const JSWorks: JSWorksLib;
@@ -17,5 +17,8 @@ export class MainPage {
 
     @(<any> JSWorks.ComponentProperty())
     public info: any;
+
+    @(<any> JSWorks.ComponentCollectionProperty())
+    public studentCourses: StudentCourse[] = [];
 
 }
