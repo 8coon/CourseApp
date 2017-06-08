@@ -1,0 +1,10 @@
+.admin-stats {
+    display: flex;
+    max-width: 300px;
+    flex-direction: column;
+}
+
+.admin-stats__row {
+    display: flex;
+    justify-content: space-between;
+}

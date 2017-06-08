@@ -18,5 +18,7 @@ export class TimeValidator {
 
             reject('Неправильный формат времени! Ожидается: 00:00');
         });
+
     }
+
 }

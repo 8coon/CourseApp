@@ -122,6 +122,14 @@ export class UserModel extends AbstractModel implements UserModelFields, IModel 
         return this.id !== undefined;
     }
 
+    // public getInfo(): Promise<any> {
+    //     if (!this.id) {
+    //         return reject();
+    //     }
+    //     return new Promise<any>((res, rej) => {
+    //
+    //     })
+    // }
 
     constructor() {
         super();

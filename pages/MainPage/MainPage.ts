@@ -15,4 +15,7 @@ export class MainPage {
     @(<any> JSWorks.ComponentProperty())
     public currentUser: UserModel;
 
+    @(<any> JSWorks.ComponentProperty())
+    public info: any;
+
 }

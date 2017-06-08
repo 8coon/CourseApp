@@ -1,3 +1,17 @@
 <app-view id="MainView" extends="BaseView">
-    <h1>It Works!</h1>
+    <view-switch>
+
+        <view-case condition="($.currentUser || {}).role === 0">
+            <view-include name="AdminInfoView"></view-include>
+        </view-case>
+
+        <view-case condition="($.currentUser || {}).role === 1">
+            <view-include name="StudentInfoView"></view-include>
+        </view-case>
+
+        <view-case condition="($.currentUser || {}).role === 2">
+            <view-include name="ProfessorInfoView"></view-include>
+        </view-case>
+
+    </view-switch>
 </app-view>

@@ -1,0 +1,32 @@
+<app-view id="StudentInfoView">
+
+    <h2>
+        <view-for variable="user" in="[$.currentUser || {}]">
+            <view-eval value="(user.first_name || '') + ' ' + (user.last_name || '')"></view-eval>
+        </view-for>
+    </h2>
+
+    <h4>Краткая сводка успеваемости</h4>
+    <view-for variable="course" in="($.info)? $.info : [{}]">
+
+        <div class="info-container">
+            <div class="info_container__row">
+                Курс:
+                <view-eval value="course.course_name"></view-eval>
+            </div>
+
+            <div class="info_container__row">
+                Группа:
+                <view-eval value="course.group_name"></view-eval>
+            </div>
+
+            <div>Предметы:</div>
+            <view-for variable="subject" in="course.subjects || []" static>
+                <view-eval value="subject.subject_name"></view-eval>
+                <view-eval value="subject.total"></view-eval>
+                <view-eval value="subject.mark_name"></view-eval>
+            </view-for>
+
+        </div>
+    </view-for>
+</app-view>

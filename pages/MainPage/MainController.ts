@@ -5,6 +5,7 @@ import {CurrentUserHelper} from "../../helpers/CurrentUserHelper";
 import {UserModel} from "../../models/UserModel";
 import {MainPage} from "./MainPage";
 import {AbstractAuthorizingController} from "../AbstractAuthorizingController";
+import {IModel} from "jsworks/dist/dts/Model/IModel";
 
 
 declare const JSWorks: JSWorksLib;
@@ -18,14 +19,22 @@ export class MainController extends AbstractAuthorizingController {
 
 
     public onCreate(): void {
-        this.view.DOMRoot.querySelector('h1').addEventListener('click', (event) => {
-            alert('clicked!');
-        });
+        // this.view.DOMRoot.querySelector('h1').addEventListener('click', (event) => {
+        //     alert('clicked!');
+        // });
     }
 
 
     public onNavigate(args: object): void {
         super.onNavigate();
+
+        CurrentUserHelper
+            .getInfo()
+            .then(data => {
+                console.log(data, data.requests);
+                this.component.info = data;
+            });
+
     }
 
 }
