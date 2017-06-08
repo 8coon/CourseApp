@@ -1,6 +1,7 @@
 'use strict';
 import {JSWorksLib} from "jsworks/dist/dts/jsworks";
 import {UserModel} from "../../models/UserModel";
+import {MarkModelFields} from "../../models/MarkModel";
 
 
 declare const JSWorks: JSWorksLib;
@@ -14,5 +15,8 @@ export class JournalPage {
 
     @(<any> JSWorks.ComponentProperty())
     public currentUser: UserModel;
+
+    @(<any> JSWorks.ComponentCollectionProperty())
+    public marks: MarkModelFields[] = [];
 
 }

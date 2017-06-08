@@ -76,6 +76,8 @@ export class JournalController extends AbstractAuthorizingController {
             this.journal.title = `Журнал группы ${data.group_name} по предмету "${data.subject_name}"`;
             this.journal.selectable = false;
 
+            this.component.marks = data.marks;
+
             if (data.entries.length === 0) {
                 this.journal.loading = false;
                 this.journal.error = 'Занятия по данному предмету у этой группы не найдены.';
@@ -98,6 +100,17 @@ export class JournalController extends AbstractAuthorizingController {
                     verticalTitle: true,
                 }
             }));
+
+            this.journal.columns.push({
+                name: 'total',
+                title: '∑',
+                pixelWidth: 25,
+            });
+
+            this.journal.columns.push({
+                name: 'mark_name',
+                title: 'ОЦЕНКА',
+            });
 
             this.journal.data = data.entries.map((student: JournalStudent) => {
                 student['name'] = `${student.student_last_name} ${student.student_first_name}`;

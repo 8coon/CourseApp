@@ -3,6 +3,7 @@ import {IModel} from "jsworks/dist/dts/Model/IModel"
 import {AbstractModel} from "./AbstractModel";
 import {IQuery} from "../helpers/QueryBuilder";
 import {UserModel} from "./UserModel";
+import {MarkModelFields} from "./MarkModel";
 
 
 declare const JSWorks: JSWorksLib;
@@ -60,6 +61,7 @@ export interface JournalEntry {
     entries: JournalStudent[];
     group_name: string;
     subject_name: string;
+    marks: MarkModelFields[];
 }
 
 
