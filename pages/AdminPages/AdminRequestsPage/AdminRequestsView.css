@@ -1,0 +1,6 @@
+
+
+app-view[requests] .table-drop-filters-button,
+app-view[requests] .table-add-button {
+    display: none;
+}

@@ -30,12 +30,24 @@
                 </view-include>
             </form-field>
 
-            <form-field for="_group_id" validates="CourseValidator">
+            <form-field for="_professor_id" validates="CourseValidator">
+                <view-include name="FormFieldView">
+
+                    <view-param name="label">Преподаватель:</view-param>
+                    <view-param name="input">
+                        <select class="select-professor" form-bind-attribute="value">
+                        </select>
+                    </view-param>
+
+                </view-include>
+            </form-field>
+
+            <form-field>
                 <view-include name="FormFieldView">
 
                     <view-param name="label">Группа:</view-param>
                     <view-param name="input">
-                        <select class="select-group" form-bind-attribute="value">
+                        <select class="select-group" form-bind-attribute="value" multiple="multiple">
                         </select>
                     </view-param>
 
@@ -78,7 +90,7 @@
 
             <view-component name="CalendarComponent" class="select-date"></view-component>
 
-            <form-field for="_time_begin" validates="TimeValidator">
+            <form-field for="_begin_time" validates="TimeValidator">
                 <view-include name="FormFieldView">
 
                     <view-param name="label">Время начала:</view-param>
@@ -89,12 +101,36 @@
                 </view-include>
             </form-field>
 
-            <form-field for="_time_end" validates="TimeValidator">
+            <form-field for="_end_time" validates="TimeValidator">
                 <view-include name="FormFieldView">
 
                     <view-param name="label">Время конца:</view-param>
                     <view-param name="input">
                         <input type="datetime" form-bind-attribute="value" value="12:00">
+                    </view-param>
+
+                </view-include>
+            </form-field>
+
+
+            <form-field for="amount" validates="AmountValidator">
+                <view-include name="FormFieldView">
+
+                    <view-param name="label">Количество занятий:</view-param>
+                    <view-param name="input">
+                        <input form-bind-attribute="value" value="1">
+                    </view-param>
+
+                </view-include>
+            </form-field>
+
+
+            <form-field for="week_offset" validates="AmountValidator">
+                <view-include name="FormFieldView">
+
+                    <view-param name="label">Повторять занятие каждые N недель:</view-param>
+                    <view-param name="input">
+                        <input form-bind-attribute="value" value="2">
                     </view-param>
 
                 </view-include>

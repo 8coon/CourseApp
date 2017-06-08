@@ -250,3 +250,9 @@ button:active {
     display: none !important;
 }
 
+
+input[disabled] {
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+}
+

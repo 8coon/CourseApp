@@ -59,7 +59,8 @@ export class CourseModel extends AbstractModel implements CourseModelFields {
     }
 
 
-    public groupsAndSubjects(courseId: number): Promise<{groups: GroupModel[], subjects: SubjectModel[]}> {
+    public groupsAndSubjects(courseId: number)
+                : Promise<{groups: GroupModel[], subjects: SubjectModel[]}> {
         return new Promise<{groups: GroupModel[], subjects: SubjectModel[]}>((resolve, reject) => {
             (<IModel> this).jsonParser.parseURLAsync(JSWorks.config['backendURL'] +
                         `/course/${courseId}/subjectsAndGroups`,

@@ -40,6 +40,13 @@
                 <app-route id="LoginWithUserRoute" page="LoginPage" match=":email"></app-route>
             </app-route>
 
+            <app-route match="journal">
+                <app-route id="JournalRoute" page="JournalPage" match=":group_and_subject_ids"></app-route>
+            </app-route>
+
+            <app-route id="AvailableCoursesRoute" page="AvailableCoursesPage" match="courses"></app-route>
+
+            <app-route id="MarksEditRoute" page="MarksEditPage" match="marks"></app-route>
 
             <app-route match="admin">
                 <app-route id="AdminCoursesRoute" page="AdminCoursesPage" match="courses"></app-route>

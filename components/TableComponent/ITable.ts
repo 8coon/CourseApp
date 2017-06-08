@@ -23,7 +23,10 @@ export interface ITableColumn {
     canEdit?: boolean;
     isTitle?: boolean;
 
-    type?: string;
+    pixelWidth?: number;
+    verticalTitle?: boolean;
+
+    type?: string;  // 'button' or 'select' or nothing for a standard text type
     selectList?: string[];
     buttonText?: string;
     onButtonClick?: (table: TableComponent, data: object) => void;

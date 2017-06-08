@@ -17,6 +17,16 @@ export interface UserModelFields {
     password?: string;
 }
 
+export interface StudentAvailableCourse {
+    id: number;
+    name: string;
+}
+
+export interface ProfessorSubject {
+    id: number;
+    name: string;
+}
+
 
 @JSWorks.Model
 export class UserModel extends AbstractModel implements UserModelFields, IModel {
@@ -159,6 +169,50 @@ export class UserModel extends AbstractModel implements UserModelFields, IModel 
     @JSWorks.ModelUpdateMethod
     public update(): Promise<AbstractModel> {
         return super.update();
+    }
+
+
+    public availableCourses(): Promise<StudentAvailableCourse[]> {
+        return new Promise<StudentAvailableCourse[]>((resolve, reject) => {
+            (<IModel> this).jsonParser.parseURLAsync(JSWorks.config['backendURL'] +
+                    `/student/avaliableCourses`,
+                JSWorks.HTTPMethod.GET,
+            ).then((data: StudentAvailableCourse[]) => {
+                resolve(data);
+            }).catch((err) => {
+                reject(err);
+            });
+        });
+    }
+
+
+    public requestCourse(courseId: number): Promise<void> {
+        return new Promise<void>((resolve, reject) => {
+            (<IModel> this).jsonParser.parseURLAsync(JSWorks.config['backendURL'] +
+                `/student/createRequest`,
+                JSWorks.HTTPMethod.POST,
+                JSON.stringify({ id: courseId }),
+                { 'Content-Type': 'application/json' },
+            ).then(() => {
+                resolve();
+            }).catch((err) => {
+                reject(err);
+            });
+        });
+    }
+
+
+    public professorSubjects(id?: number): Promise<ProfessorSubject[]> {
+        return new Promise<ProfessorSubject[]>((resolve, reject) => {
+            (<IModel> this).jsonParser.parseURLAsync(JSWorks.config['backendURL'] +
+                `/professor/${id || this.id}/subjects`,
+                JSWorks.HTTPMethod.GET,
+            ).then((subjects: ProfessorSubject[]) => {
+                resolve(subjects);
+            }).catch((err) => {
+                reject(err);
+            });
+        });
     }
 
 }

@@ -2,6 +2,7 @@ import {JSWorksLib} from "jsworks/dist/dts/jsworks";
 import {IModel} from "jsworks/dist/dts/Model/IModel"
 import {AbstractModel} from "./AbstractModel";
 import {IQuery} from "../helpers/QueryBuilder";
+import {UserModel} from "./UserModel";
 
 
 declare const JSWorks: JSWorksLib;
@@ -71,6 +72,46 @@ export class SubjectModel extends AbstractModel implements SubjectModelFields {
     @JSWorks.ModelUpdateMethod
     public update(): Promise<AbstractModel> {
         return super.update();
+    }
+
+
+    public professors(id?: number): Promise<UserModel[]> {
+        return new Promise<UserModel[]>((resolve, reject) => {
+            (<IModel> this).jsonParser.parseURLAsync(JSWorks.config['backendURL'] +
+                `/subject/${id || this.id}/professors`,
+                JSWorks.HTTPMethod.GET,
+            ).then((data: any[]) => {
+                const users: UserModel[] = [];
+
+                data.forEach((user: any) => {
+                    const userModel: UserModel = <UserModel> JSWorks.applicationContext
+                            .modelHolder.getModel('UserModel');
+                    users.push(<UserModel> userModel.from(user));
+                });
+
+                resolve(users);
+            }).catch((err) => {
+                reject(err);
+            });
+        });
+    }
+
+
+    public setProfessors(id: number, ids: string[]): Promise<any> {
+        const idList: number[] = ids.map((idStr: string) => AbstractModel.parseNumber(idStr));
+
+        return new Promise<any>((resolve, reject) => {
+            (<IModel> this).jsonParser.parseURLAsync(JSWorks.config['backendURL'] +
+                    `/subject/${id || this.id}/setProfessors`,
+                JSWorks.HTTPMethod.POST,
+                JSON.stringify({ ids: idList }),
+                { 'Content-Type': 'application/json' },
+            ).then(() => {
+                resolve();
+            }).catch((err) => {
+                reject(err);
+            });
+        });
     }
 
 }

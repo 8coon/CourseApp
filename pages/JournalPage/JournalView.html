@@ -1,0 +1,11 @@
+<app-view id="JournalView" extends="BaseView">
+
+    <view-component name="TableComponent" id="journal"></view-component>
+
+    <h2>Оценочная шкала</h2>
+
+    <view-for variable="mark" in="$.marks">
+        <view-eval value="mark.min + ' - ' + mark.max + ' &mdash; ' + mark.name"></view-eval>
+    </view-for>
+
+</app-view>

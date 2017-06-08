@@ -99,14 +99,31 @@
                                     </view-for>
                                 </view-case>
 
-                                <view-case condition="column.type === 'button'">
+                                <view-case condition="column.type === 'button' &&
+                                        (row || {})['_button_' + column.name] !== false">
                                     <button type="button">
                                         <view-eval value="column.buttonText || '&nbsp;'"></view-eval>
                                     </button>
                                 </view-case>
 
-                                <view-case condition="column.type !== 'button'">
-                                    <view-eval value="(row || {})[column.name] || '&nbsp;'"></view-eval>
+                                <view-case condition="column.type !== 'button' ||
+                                        (column.type === 'button' &&
+                                            (row || {})['_button_' + column.name] === false)">
+                                    <div class="table-cell-value-container cursor-pointer">
+                                        <view-eval value="(row || {})[column.name] === undefined
+                                                ? '&nbsp;' : (row || {})[column.name]">
+                                        </view-eval>
+
+                                        <view-if condition="(row || {})['_tooltip_' + column.name]
+                                                !== undefined" static>
+                                            <view-then>
+                                                <view-eval class="table-cell-tooltip"
+                                                           value="(row || {})['_tooltip_' +
+                                                                column.name]"></view-eval>
+                                            </view-then>
+                                            <view-else></view-else>
+                                        </view-if>
+                                    </div>
                                 </view-case>
 
                             </view-switch>

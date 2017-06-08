@@ -1,6 +1,4 @@
 import {JSWorksLib} from "jsworks/dist/dts/jsworks";
-import {JSONParserService} from "jsworks/dist/dts/Parser/JSON/JSONParserService";
-import {SimpleVirtualDOMElement} from "jsworks/dist/dts/VirtualDOM/SimpleVirtualDOM/SimpleVirtualDOMElement";
 
 
 declare const JSWorks: JSWorksLib;
@@ -16,7 +14,7 @@ export class CourseValidator {
                 return;
             }
 
-            reject('Выберите курс');
+            reject('Выберите значение');
         });
     }
 }

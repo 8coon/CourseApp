@@ -482,6 +482,10 @@ export class TableController {
             }
         });
 
+        const pixelWidth: boolean = (<any> this.component.columns).getValues().some(
+            (column: ITableColumn): boolean => column.pixelWidth !== undefined
+        );
+
         items.forEach((item: SimpleVirtualDOMElement, index: number) => {
             const col: ITableColumn = (<any> this.component.columns).get(index);
 
@@ -493,6 +497,17 @@ export class TableController {
 
             if (!grow) {
                 grow = (1.0 - width) / undefinedWidths;
+            }
+
+            if (col.pixelWidth !== undefined) {
+                item.setStyleAttribute('width', `${col.pixelWidth}px`);
+                item.setStyleAttribute('max-width', `${col.pixelWidth}px`);
+
+                return;
+            }
+
+            if (pixelWidth) {
+                return;
             }
 
             item.setStyleAttribute('flex-grow', String(grow * 100).replace(',', '.'));
@@ -559,10 +574,13 @@ export class TableController {
 
     public onUpdate(): void {
         this.view.DOMRoot.querySelectorAll('.table-column').forEach((column: SimpleVirtualDOMElement) => {
-            const colData: ITableColumn = (<any> this.component.columns).get(parseInt(column.getAttribute('column')));
+            const colData: ITableColumn = (<any> this.component.columns).get(
+                    parseInt(column.getAttribute('column')));
 
             this.patchSorter(column, colData);
             this.patchFilter(column, colData);
+
+            column.toggleClass('table-column-title-vertical', colData.verticalTitle === true);
         });
 
         this.patchCells();

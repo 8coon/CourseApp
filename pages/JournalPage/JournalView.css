@@ -1,0 +1,20 @@
+
+
+#journal .table-toolbox-button {
+    display: none;
+}
+
+
+#journal .table-pager {
+    display: none;
+}
+
+
+.attendance-checkbox {
+    white-space: nowrap;
+    display: inline;
+}
+
+.attendance-checkbox input {
+    width: 10px !important;
+}

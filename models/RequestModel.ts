@@ -7,15 +7,17 @@ import {IQuery} from "../helpers/QueryBuilder";
 declare const JSWorks: JSWorksLib;
 
 
-export interface GroupModelFields {
+export interface RequestModelFields {
     id: number;
     course_id: number;
-    name: string;
+    course_name: string;
+    student_first: string;
+    student_last: string;
 }
 
 
 @JSWorks.Model
-export class GroupModel extends AbstractModel implements GroupModelFields {
+export class RequestModel extends AbstractModel implements RequestModelFields {
 
     @JSWorks.ModelField
     @JSWorks.ModelPrimaryKey
@@ -25,18 +27,24 @@ export class GroupModel extends AbstractModel implements GroupModelFields {
     public course_id: number;
 
     @JSWorks.ModelField
-    public name: string;
+    public course_name: string;
 
-    public controllerUrl: string = 'group';
+    @JSWorks.ModelField
+    public student_first: string;
 
+    @JSWorks.ModelField
+    public student_last: string;
 
-    public set _course_id(value) {
-        this.course_id = AbstractModel.parseNumber(value);
-    }
+    public controllerUrl: string = 'request';
 
 
     constructor() {
         super();
+    }
+
+
+    get _student_name(): string {
+        return `${this.student_last} ${this.student_first}`;
     }
 
 
@@ -63,6 +71,22 @@ export class GroupModel extends AbstractModel implements GroupModelFields {
     @JSWorks.ModelUpdateMethod
     public update(): Promise<AbstractModel> {
         return super.update();
+    }
+
+
+    public approve(groupId: number, id?: number) {
+        return new Promise<any>((resolve, reject) => {
+            (<IModel> this).jsonParser.parseURLAsync(JSWorks.config['backendURL'] +
+                `/request/accept`,
+                JSWorks.HTTPMethod.POST,
+                JSON.stringify({ request_id: id || this.id, group_id: groupId }),
+                { 'Content-Type': 'application/json' },
+            ).then(() => {
+                resolve();
+            }).catch((err) => {
+                reject(err);
+            });
+        });
     }
 
 }

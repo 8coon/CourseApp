@@ -82,36 +82,50 @@ export abstract class AbstractAdminPageController extends AbstractAuthorizingCon
         };
 
 
-        this.table.controller.onAdd = (table: TableComponent) => {
-            const windows: WindowComponent = JSWorks.applicationContext.currentPage['view']
-                    .DOMRoot.querySelector('#modal-root').component;
-            const windowView: View = JSWorks.applicationContext.viewHolder.getView(this.addFormName);
-            const form: FormForElement = <FormForElement> windowView.DOMRoot.querySelector('form-for');
-            form.clear();
-
-            form.onSuccess = (): boolean => {
-                windows.closeLastWindow();
-                this.table.controller.onQuery(table);
-
-                return true;
-            };
-
-            const closeButton: SimpleVirtualDOMElement = windowView.DOMRoot.querySelector('.button-close');
-            closeButton.addEventListener('click', () => {
-                form.clear();
-                windows.closeLastWindow();
-            });
-
-            this.onFormOpen(form).then(() => {
-                windows.openWindow(windowView);
-            }).catch((err) => {
-                table.error = err;
+        this.table.controller.onAdd = () => {
+            this.openWindow(this.addFormName, (form: FormForElement) => {
+                return this.onFormOpen(form);
             });
         };
 
 
         this.setup();
         this.table.controller.onQuery(this.table);
+    }
+
+
+    public openWindow(formViewName: string, onOpen: (form: FormForElement,
+                                                     windowView?: View) => Promise<any>): void {
+        const windows: WindowComponent = JSWorks.applicationContext.currentPage['view']
+            .DOMRoot.querySelector('#modal-root').component;
+        const windowView: View = JSWorks.applicationContext.viewHolder.getView(formViewName);
+        const form: FormForElement = <FormForElement> windowView.DOMRoot.querySelector('form-for');
+
+        if (form !== undefined) {
+            form.clear();
+
+            form.onSuccess = (): boolean => {
+                windows.closeLastWindow();
+                this.table.controller.onQuery(this.table);
+
+                return true;
+            };
+        }
+
+        const closeButton: SimpleVirtualDOMElement = windowView.DOMRoot.querySelector('.button-close');
+        closeButton.addEventListener('click', () => {
+            if (form !== undefined) {
+                form.clear();
+            }
+
+            windows.closeLastWindow();
+        });
+
+        onOpen(form, windowView).then(() => {
+            windows.openWindow(windowView);
+        }).catch((err) => {
+            this.table.error = err;
+        });
     }
 
 }

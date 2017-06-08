@@ -11,6 +11,7 @@ import {SubjectModel} from "../../../models/SubjectModel";
 import {GroupModel} from "../../../models/GroupModel";
 import {CalendarComponent} from "../../../components/CalendarComponent/CalendarComponent";
 import {ComponentElement} from "jsworks/dist/dts/CustomElements/ViewElements/ComponentElement";
+import {ClassModel} from "../../../models/ClassModel";
 
 
 declare const JSWorks: JSWorksLib;
@@ -24,6 +25,21 @@ export class AdminClassesController extends AbstractAdminPageController {
 
 
     public onFormOpen(form: FormForElement): Promise<any> {
+        form.onSubmit = (): boolean => {
+            const selectGroup: SimpleVirtualDOMElement = form.querySelector('.select-group');
+            const options = (<HTMLSelectElement> selectGroup.rendered).options;
+            const values: string[] = [];
+
+            for (let i = 0; i < options.length; i++) {
+                if (options[i].selected) {
+                    values.push(options[i].text);
+                }
+            }
+
+            (<ClassModel> form.model)._group_ids = values;
+            return true;
+        };
+
         const calendar: CalendarComponent = <CalendarComponent> (<ComponentElement> form
             .querySelector('.select-date')).component;
         const dateInput: SimpleVirtualDOMElement = form.querySelector('.show-calendar');
@@ -45,6 +61,7 @@ export class AdminClassesController extends AbstractAdminPageController {
 
         calendar.controller.onSelect = (calendar: CalendarComponent, date: Date) => {
             dateInput.rendered['value'] = date.toDateString();
+            dateInput.rendered.dispatchEvent(new Event('change'));
         };
 
 
@@ -53,6 +70,8 @@ export class AdminClassesController extends AbstractAdminPageController {
         const select: SimpleVirtualDOMElement = form.querySelector('.select-course');
 
         if (!select['_adminPatched']) {
+            select['_adminPatched'] = true;
+
             select.addEventListener('change', () => {
                 const value: string = (<any> select.rendered).value;
 
@@ -68,12 +87,6 @@ export class AdminClassesController extends AbstractAdminPageController {
                         const selectGroup: SimpleVirtualDOMElement = form.querySelector('.select-group');
                         selectGroup.removeChildren();
 
-                        let option = virtualDOM.createElement('OPTION');
-                        option.appendChild(virtualDOM.createTextElement('Выберите группы:'));
-                        option.setAttribute('selected', 'selected');
-
-                        selectGroup.appendChild(option);
-
                         groupsAndSubjects.groups.forEach((group: GroupModel) => {
                             const option = virtualDOM.createElement('OPTION');
                             option.appendChild(virtualDOM.createTextElement(`${group.id} - ${group.name}`));
@@ -84,7 +97,7 @@ export class AdminClassesController extends AbstractAdminPageController {
                         const selectSubject: SimpleVirtualDOMElement = form.querySelector('.select-subject');
                         selectSubject.removeChildren();
 
-                        option = virtualDOM.createElement('OPTION');
+                        const option = virtualDOM.createElement('OPTION');
                         option.appendChild(virtualDOM.createTextElement('Выберите предмет:'));
                         option.setAttribute('selected', 'selected');
 
@@ -95,8 +108,47 @@ export class AdminClassesController extends AbstractAdminPageController {
                             option.appendChild(virtualDOM.createTextElement(`${subject.id} - ${subject.name}`));
                             selectSubject.appendChild(option);
                         });
+
+                        if (selectSubject['_adminPatched']) {
+                            return;
+                        }
+
+                        selectSubject.addEventListener('change', () => {
+                            const value: string = (<any> selectSubject.rendered).value;
+
+                            if (!value.includes('-')) {
+                                return;
+                            }
+
+                            const subjectId: number = parseInt(String(value).split('-')[0].trim(), 10);
+
+                            (<SubjectModel> JSWorks.applicationContext.modelHolder.getModel('SubjectModel'))
+                                .professors(subjectId)
+                                .then((professors: UserModel[]) => {
+                                    const selectProfessor: SimpleVirtualDOMElement =
+                                            form.querySelector('.select-professor');
+                                    selectProfessor.removeChildren();
+
+                                    const option = virtualDOM.createElement('OPTION');
+                                    option.appendChild(virtualDOM.createTextElement(
+                                            'Выберите преподавателя:'));
+                                    option.setAttribute('selected', 'selected');
+
+                                    selectProfessor.appendChild(option);
+
+                                    professors.forEach((professor: UserModel) => {
+                                        const option = virtualDOM.createElement('OPTION');
+                                        option.appendChild(virtualDOM.createTextElement(
+                                                `${professor.id} - ${professor.first_name} ` +
+                                                    `${professor.last_name}`));
+                                        selectProfessor.appendChild(option);
+                                    });
+                            });
+                        });
                     });
             });
+
+
         }
 
         return (<CourseModel> JSWorks.applicationContext.modelHolder.getModel('CourseModel'))
@@ -135,7 +187,7 @@ export class AdminClassesController extends AbstractAdminPageController {
                 title: 'ДАТА',
             },
             {
-                name: '_times',
+                name: '_time',
                 title: 'ВРЕМЯ',
             },
             {
@@ -144,7 +196,7 @@ export class AdminClassesController extends AbstractAdminPageController {
             },
             {
                 name: 'group_name',
-                title: 'КУРС',
+                title: 'ГРУППА',
             },
         ]);
     }
