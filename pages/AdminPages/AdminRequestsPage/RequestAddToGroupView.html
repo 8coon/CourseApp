@@ -1,0 +1,31 @@
+<app-view id="RequestAddToGroupView">
+
+    <h1>Добавить студента в группу</h1>
+    <hr>
+
+    <form-for model="RequestModel" id="RequestForm">
+        <form>
+
+            <form-field validates="CourseValidator">
+                <view-include name="FormFieldView">
+
+                    <view-param name="label">Группа:</view-param>
+                    <view-param name="input">
+                        <select class="select-group" form-bind-attribute="value"></select>
+                    </view-param>
+
+                </view-include>
+            </form-field>
+
+            <div class="form-spacer"></div>
+            <hr>
+
+            <div class="form-buttons">
+                <button type="button" class="button-close">Отмена</button>
+                <button type="submit" form-submit="true">Добавить</button>
+            </div>
+
+        </form>
+    </form-for>
+
+</app-view>

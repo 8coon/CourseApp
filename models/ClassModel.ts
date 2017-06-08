@@ -56,6 +56,13 @@ export interface JournalStudent {
 }
 
 
+export interface JournalEntry {
+    entries: JournalStudent[];
+    group_name: string;
+    subject_name: string;
+}
+
+
 
 @JSWorks.Model
 export class ClassModel extends AbstractModel implements ClassModelFields {
@@ -199,25 +206,47 @@ export class ClassModel extends AbstractModel implements ClassModelFields {
     }
 
 
-    public journal(groupId: number, subjectId: number): Promise<JournalStudent[]> {
-        return new Promise<JournalStudent[]>((resolve, reject) => {
+    public journal(groupId: number, subjectId: number): Promise<JournalEntry> {
+        return new Promise<JournalEntry>((resolve, reject) => {
             (<IModel> this).jsonParser.parseURLAsync(JSWorks.config['backendURL'] +
                 `/journal/show`,
                 JSWorks.HTTPMethod.POST,
                 JSON.stringify({ group_id: groupId, subject_id: subjectId }),
                 { 'Content-Type': 'application/json' },
-            ).then((students: JournalRawStudent[]) => {
-                console.log(`group: ${groupId}, subject: ${subjectId}`);
-                console.log(students);
-
-                resolve(students.map((student: JournalRawStudent) => {
+            ).then((data: JournalEntry) => {
+                data.entries = (<any[]> data.entries).map((student: JournalRawStudent) => {
                     student.classes = <any> student.classes.map((rawClass: JournalRawClass) => {
                         (<any> rawClass).class_begin_date = new Date(rawClass.class_begin_date);
                         return <any> rawClass;
                     });
 
                     return <any> student;
-                }));
+                });
+
+                resolve(data);
+            }).catch((err) => {
+                reject(err);
+            })
+        });
+    }
+
+
+    public attend(classId: number, studentId, attended: boolean,
+                  mark: JournalClassMark): Promise<void> {
+        return new Promise<void>((resolve, reject) => {
+            (<IModel> this).jsonParser.parseURLAsync(JSWorks.config['backendURL'] +
+                `/journal/addAttendance`,
+                JSWorks.HTTPMethod.POST,
+                JSON.stringify({
+                    class_id: classId,
+                    student_id: studentId,
+                    mark: mark.mark,
+                    comment: mark.comment,
+                    attendance: attended,
+                }),
+                { 'Content-Type': 'application/json' },
+            ).then(() => {
+                resolve();
             }).catch((err) => {
                 reject(err);
             })

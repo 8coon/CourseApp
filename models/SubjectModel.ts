@@ -114,9 +114,4 @@ export class SubjectModel extends AbstractModel implements SubjectModelFields {
         });
     }
 
-
-    public batchCreate(): any {
-
-    }
-
 }

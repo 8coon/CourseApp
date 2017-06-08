@@ -277,3 +277,17 @@
 .table-cell-value-container:hover .table-cell-tooltip {
     visibility: visible;
 }
+
+
+.table-column-title-vertical view-eval[value="column.title"] {
+    margin-left: 25%;
+    margin-top: -100%;
+
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+}

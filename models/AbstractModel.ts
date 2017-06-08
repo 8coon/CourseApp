@@ -41,6 +41,7 @@ export abstract class AbstractModel {
                 });
 
                 resolve(models);
+                console.log(models);
             }).catch((err) => {
                 reject(err);
             });

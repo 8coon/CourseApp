@@ -1,0 +1,59 @@
+<app-view id="AddAttendanceFormView">
+
+    <h1>Добавить или изменить посещение</h1>
+    <hr>
+
+    <form-for model="ClassModel" id="AttendanceForm">
+        <form>
+
+            <form-field>
+                <view-include name="FormFieldView">
+
+                    <view-param name="label"></view-param>
+                    <view-param name="input">
+                        <div class="attendance-checkbox">
+                            <label><input id="check-has-attendance" type="checkbox"
+                                          form-bind-attribute="checked">
+                                Студент присутствовал(-а) на занятии</label>
+                        </div>
+                    </view-param>
+
+                </view-include>
+            </form-field>
+
+            <form-field validates="MarkValidator">
+                <view-include name="FormFieldView">
+
+                    <view-param name="label">Оценка:</view-param>
+                    <view-param name="input">
+                        <input id="attendance-mark" form-bind-attribute="value" class="journal-can-be-disabled">
+                    </view-param>
+
+                </view-include>
+            </form-field>
+
+            <form-field>
+                <view-include name="FormFieldView">
+
+                    <view-param name="label">Комментарий:</view-param>
+                    <view-param name="input">
+                        <input id="attendance-comment" form-bind-attribute="value"
+                               class="journal-can-be-disabled">
+                    </view-param>
+
+                </view-include>
+            </form-field>
+
+
+            <div class="form-spacer"></div>
+            <hr>
+
+            <div class="form-buttons">
+                <button type="button" class="button-close">Отмена</button>
+                <button type="submit" form-submit="true">Применить</button>
+            </div>
+
+        </form>
+    </form-for>
+
+</app-view>
