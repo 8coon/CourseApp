@@ -27,12 +27,12 @@ export class AdminRequestsController extends AbstractAdminPageController {
     public courseModel: CourseModel;
 
 
-    public onFormOpen(form: FormForElement, courseId?: number): Promise<any> {
+    public onFormOpen(form: FormForElement, courseId?: number, requestId?: number): Promise<any> {
         form.onSubmit = (): boolean => {
             const select: SimpleVirtualDOMElement = form.querySelector('.select-group');
             const groupId: number = AbstractModel.parseNumber((<HTMLSelectElement> select.rendered).value);
 
-            this.requestModel.approve(groupId, courseId).then(() => {
+            this.requestModel.approve(groupId, requestId).then(() => {
                 this.table.controller.refresh();
             });
 
@@ -86,7 +86,7 @@ export class AdminRequestsController extends AbstractAdminPageController {
 
                 onButtonClick: (table: TableComponent, data: RequestModel) => {
                     this.openWindow(this.addFormName,
-                            (form: FormForElement) => this.onFormOpen(form, data.course_id));
+                            (form: FormForElement) => this.onFormOpen(form, data.course_id, data.id));
                 }
             }
         ]);

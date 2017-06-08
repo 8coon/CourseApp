@@ -41,6 +41,7 @@ export interface JournalRawStudent {
     student_id: number;
     student_first_name: number;
     student_last_name: number;
+    mark_name: string;
 }
 
 export interface JournalClass {
@@ -54,6 +55,7 @@ export interface JournalStudent {
     student_id: number;
     student_first_name: number;
     student_last_name: number;
+    mark_name: string;
 }
 
 
@@ -221,6 +223,8 @@ export class ClassModel extends AbstractModel implements ClassModelFields {
                         (<any> rawClass).class_begin_date = new Date(rawClass.class_begin_date);
                         return <any> rawClass;
                     });
+
+                    student.mark_name = student.mark_name || '(нет)';
 
                     return <any> student;
                 });
