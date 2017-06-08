@@ -30,19 +30,7 @@ export class MainController extends AbstractAuthorizingController {
                     current.info().then((courses: StudentCourse[]) => {
                         this.component.studentCourses = courses;
 
-                        const findCourse = (id: number): StudentCourse => {
-                            let course: StudentCourse;
-
-                            courses.forEach((c: StudentCourse) => {
-                                if (c.course_id === id) {
-                                    course = c;
-                                }
-                            });
-
-                            return course;
-                        };
-
-                        window.setTimeout(() => {
+                        /*window.setTimeout(() => {
                             this.view.DOMRoot.querySelectorAll('.student-stat-table').forEach(
                                     (tableElement: ComponentElement) => {
                                 const table: TableComponent = tableElement.component;
@@ -70,7 +58,7 @@ export class MainController extends AbstractAuthorizingController {
                                 table.controller.refresh();
                                 tableElement.render();
                             });
-                        }, 10);
+                        }, 10);*/
                     });
                 } break;
 

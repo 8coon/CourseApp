@@ -18,7 +18,7 @@ export class MainPage {
     @(<any> JSWorks.ComponentProperty())
     public info: any;
 
-    @(<any> JSWorks.ComponentCollectionProperty())
+    @(<any> JSWorks.ComponentProperty())
     public studentCourses: StudentCourse[] = [];
 
 }

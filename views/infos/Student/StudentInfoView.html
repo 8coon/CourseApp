@@ -9,8 +9,18 @@
     <h4>Краткая сводка успеваемости</h4>
 
     <view-for variable="course" in="$.studentCourses">
-        <view-component name="TableComponent" class="student-stat-table" id="course-${course.course_id}">
-        </view-component>
+        <h2><view-eval value="course.course_name"></view-eval></h2>
+        <h5><view-eval value="course.group_name"></view-eval></h5>
+
+        <table>
+            <view-for variable="subject" in="course.subjects || []" static>
+                <tr>
+                    <td><view-eval value="console.log(subject), subject.subject_name"></view-eval></td>
+                    <td><view-eval value="subject.total"></view-eval></td>
+                    <td><view-eval value="subject.mark_name"></view-eval></td>
+                </tr>
+            </view-for>
+        </table>
     </view-for>
 
 </app-view>
