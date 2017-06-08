@@ -26,6 +26,10 @@ export abstract class AbstractModel {
 
 
     public query(params: IQuery): Promise<AbstractModel[]> {
+        if (params.orders.length === 0) {
+            params.orders = [['id', 'ASC']];
+        }
+
         return new Promise<AbstractModel[]>((resolve, reject) => {
             (<IModel> this).jsonParser.parseURLAsync(JSWorks.config['backendURL'] +
                     `/${this.controllerUrl}/select`,

@@ -22,6 +22,11 @@ export interface StudentAvailableCourse {
     name: string;
 }
 
+export interface ProfessorSubject {
+    id: number;
+    name: string;
+}
+
 
 @JSWorks.Model
 export class UserModel extends AbstractModel implements UserModelFields, IModel {
@@ -182,6 +187,20 @@ export class UserModel extends AbstractModel implements UserModelFields, IModel 
                 { 'Content-Type': 'application/json' },
             ).then(() => {
                 resolve();
+            }).catch((err) => {
+                reject(err);
+            });
+        });
+    }
+
+
+    public professorSubjects(id?: number): Promise<ProfessorSubject[]> {
+        return new Promise<ProfessorSubject[]>((resolve, reject) => {
+            (<IModel> this).jsonParser.parseURLAsync(JSWorks.config['backendURL'] +
+                `/professor/${id || this.id}/subjects`,
+                JSWorks.HTTPMethod.GET,
+            ).then((subjects: ProfessorSubject[]) => {
+                resolve(subjects);
             }).catch((err) => {
                 reject(err);
             });

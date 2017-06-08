@@ -110,7 +110,8 @@
                                         (column.type === 'button' &&
                                             (row || {})['_button_' + column.name] === false)">
                                     <div class="table-cell-value-container cursor-pointer">
-                                        <view-eval value="(row || {})[column.name] || '&nbsp;'">
+                                        <view-eval value="(row || {})[column.name] === undefined
+                                                ? '&nbsp;' : (row || {})[column.name]">
                                         </view-eval>
 
                                         <view-if condition="(row || {})['_tooltip_' + column.name]

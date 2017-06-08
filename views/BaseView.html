@@ -29,11 +29,15 @@
                         <li><link-to route="AdminUsersRoute">Пользователи</link-to></li>
                         <li><link-to route="AdminGroupsRoute">Группы</link-to></li>
                         <li><link-to route="AdminClassesRoute">Занятия</link-to></li>
-                        <li><link-to route="AdminRequestsRoute">Заявки</link-to></li>
+                        <li><link-to route="AdminRequestsRoute">Заявки на курсы</link-to></li>
                     </view-case>
 
                     <view-case condition="($.currentUser || {}).role === 1">
                         <li><link-to route="AvailableCoursesRoute">Доступные курсы</link-to></li>
+                    </view-case>
+
+                    <view-case condition="($.currentUser || {}).role === 2">
+                        <li><link-to route="MarksEditRoute">Редактирование оценочной шкалы</link-to></li>
                     </view-case>
 
                 </view-switch>
